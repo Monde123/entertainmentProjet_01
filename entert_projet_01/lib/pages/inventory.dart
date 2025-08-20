@@ -38,7 +38,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return TransferInventory(index: widget.index+1);
+                    return TransferInventory(index: widget.index);
                   },
                 ),
               );
@@ -55,97 +55,105 @@ class _InventoryScreenState extends State<InventoryScreen> {
           children: [
             banchInventory(widget.index),
             SizedBox(height: 10),
-             SizedBox(
+            SizedBox(
               height: 80,
-                child: ListView.builder(
-                  itemCount: categoryList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedCategory = index;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(left: 16, bottom: 16, ),
-                        child: Text(
-                          categoryList[index],
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: index == _selectedCategory ? 22 : 20,
-                            fontWeight:
-                                index == _selectedCategory
-                                    ? FontWeight.bold
-                                    : FontWeight.w400,
-                          ),
+              child: ListView.builder(
+                itemCount: categoryList.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedCategory = index;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.only(left: 16, bottom: 16),
+                      child: Text(
+                        categoryList[index],
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: index == _selectedCategory ? 20 : 16,
+                          fontWeight:
+                              index == _selectedCategory
+                                  ? FontWeight.bold
+                                  : FontWeight.w400,
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            
+            ),
+
             Expanded(
               child: SizedBox(
                 child: ListView.builder(
                   itemCount: 8,
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: EdgeInsets.all(20),
-                      margin: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.black,
-                                  child: Text(
-                                    'ML',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                    return Padding(
+                      padding: EdgeInsets.only(left: 24, right: 24),
+                      child: Container(
+                        padding: EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 20,
+                          bottom: 20,
+                        ),
+                        margin: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Colors.black,
+                                    child: Text(
+                                      'ML',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 12),
-                                Text('Market Louis', style: style(16, 2)),
-                              ],
+                                  SizedBox(width: 12),
+                                  Text('Market Louis', style: style(16, 2)),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.baseline,
-                              textBaseline: TextBaseline.alphabetic,
-                              children: const <Widget>[
-                                Text(
-                                  '43',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color:Colors.black
+                            SizedBox(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: const <Widget>[
+                                  Text(
+                                    '43',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '/100',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.blueGrey,
+                                  Text(
+                                    '/100',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.blueGrey,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -160,41 +168,45 @@ class _InventoryScreenState extends State<InventoryScreen> {
 }
 
 Widget banchInventory(int index) => Container(
-  height: 150,
+  height: 120,
   padding: EdgeInsets.only(left: 20, right: 20),
- margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
+  margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
   decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(16),
   ),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-   // crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      SizedBox(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Wall Wolf St', style: style(12, 1)),
-            SizedBox(height: 8),
-            Text('Branch ($index)', style: style(20, 3)),
-          ],
+  child: Align(
+    alignment: Alignment.center,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+      children: [
+        SizedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Wall Wolf St', style: style(12, 1)),
+              SizedBox(height: 8),
+              Text('Branch ($index)', style: style(20, 3)),
+            ],
+          ),
         ),
-      ),
-      Container(
-        margin: EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: backgroundColor,
+        Container(
+          margin: EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: backgroundColor,
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.arrow_drop_down, color: Colors.red),
+              SizedBox(width: 3),
+              Text('Low stock', style: TextStyle(color: Colors.red)),
+            ],
+          ),
         ),
-        child: Row(
-          children: [
-            Icon(Icons.arrow_drop_down, color: Colors.red),
-            SizedBox(width: 3),
-            Text('Low stock', style: TextStyle(color: Colors.red)),
-          ],
-        ),
-      ),
-    ],
+      ],
+    ),
   ),
 );

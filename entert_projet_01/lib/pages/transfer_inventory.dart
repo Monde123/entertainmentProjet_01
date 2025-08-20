@@ -1,4 +1,5 @@
 // pages/transfer_inventory.dart
+import 'package:entert_projet_01/pages/staff_overview.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -15,105 +16,136 @@ class TransferInventory extends StatefulWidget {
 class _TransferInventoryState extends State<TransferInventory> {
   @override
   Widget build(BuildContext context) {
-    double hauteur = MediaQuery.of(context).size.height;
     double largeur = MediaQuery.of(context).size.width;
+    double hauteur = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
         centerTitle: true,
+        actionsPadding: EdgeInsets.all(20),
         title: Text('Transfert Inventory', style: style(16, 2)),
-        actions: [Icon(Icons.circle, fill: 0.5, color: textColor)],
+        actions: [Icon(FontAwesomeIcons.circleH, color: textColor)],
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              height: hauteur * 0.8,
-              width: largeur,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+            Expanded(
+              child: Container(
+                width: largeur,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: largeur * 0.45,
-                    width: largeur,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/image.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  ListTile(
-                   
-                    title: Text('Branch(${widget.index})', style: style(20, 3)),
-                    subtitle: Text(faker.address.city(), style: style(12, 1)),
-                    trailing: Container(
-                      padding: EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Container(
+                      height: hauteur * 0.55,
+                      width: largeur,
                       decoration: BoxDecoration(
-                        color: primaryColor,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blue.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
+                        image: DecorationImage(
+                          image: AssetImage('assets/image.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      child: Icon(Icons.check, color: Colors.white, size: 24),
                     ),
-                  ),
-                  Container(
-                    height: 40,
-                    width: largeur,
-                    padding: EdgeInsets.only(left: 28, right: 28),
-                    decoration: BoxDecoration(
-                      color: backgroundColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          
-                          height: 40,
-                          width: largeur * 0.58,
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: ListTile(
+                        title: Text(
+                          'Branch(${widget.index})',
+                          style: style(20, 3),
+                        ),
+                        subtitle: Text(
+                          faker.address.city(),
+                          style: style(12, 1),
+                        ),
+                        trailing: Container(
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: secondaryColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
+                            color: primaryColor,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.blue.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 60,
+                      width: largeur,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            height: 60,
+                            width: largeur * 0.58,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12),
+                                bottomLeft: Radius.circular(12),
+                              ),
+                              color: secondaryColor,
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  FontAwesomeIcons.heart,
+                                  //color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
                             ),
                           ),
-                          child:  CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Icon(FontAwesomeIcons.gem, color:primaryColor),
-                          )
-                          
-                        ),
-                        Text('125%', style: style(10, 1)),
-                      ],
+                          SizedBox(width: 8),
+                          Text('125%', style: style(12, 2)),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 10 ),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return StaffOverview(index: widget.index);
+                      },
+                    ),
+                  );
+                },
                 title: Text(
-                  'Request Inventory',
+                  'Staff Inventory',
                   style: TextStyle(color: Colors.white, fontSize: 14),
                 ),
                 trailing: Icon(Icons.arrow_right_alt, color: Colors.white),

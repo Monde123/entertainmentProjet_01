@@ -1,4 +1,6 @@
 // pages/home_page.dart
+import 'package:entert_projet_01/pages/details_analytics.dart';
+import 'package:entert_projet_01/pages/inventory.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -67,107 +69,120 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              width: largeurEcran - 40,
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    width: largeurEcran - 40,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.change_circle_rounded,
-                              color: Colors.white,
-                            ),
-                            Icon(Icons.more_horiz_sharp, color: textColor),
-                          ],
-                        ),
-
-                        const SizedBox(height: 10),
-                        //widget de la carte analytics
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
+             Container(
+                width: largeurEcran - 40,
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      width: largeurEcran - 40,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Net Income',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: textColor,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '\$74000',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: textColor,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  const Text(
-                                    '+25.22% (\$5.00)',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ],
+                              Icon(
+                                Icons.change_circle_rounded,
+                                color:textColor,
                               ),
-
-                              CircularPercentIndicator(
-                                radius: 40.0,
-                                lineWidth: 12.0,
-                                percent: 0.78,
-                                center: Text(
-                                  "78%",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: primaryColor,
-                                  ),
-                                ),
-                                progressColor: Colors.blue,
-                                backgroundColor: Colors.grey[200]!,
-                                circularStrokeCap: CircularStrokeCap.round,
-                              ),
+                              Icon(Icons.more_horiz_sharp, color: textColor),
                             ],
                           ),
-                        ),
-                      ],
+
+                          const SizedBox(height: 10),
+                          //widget de la carte analytics
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Net Income',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '\$74000',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    const Text(
+                                      '+25.22% (\$5.00)',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                CircularPercentIndicator(
+                                  radius: 40.0,
+                                  lineWidth: 12.0,
+                                  percent: 0.78,
+                                  center: Text(
+                                    "78%",
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: primaryColor,
+                                    ),
+                                  ),
+                                  progressColor: Colors.blue,
+                                  backgroundColor: Colors.grey[200]!,
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  ListTile(
-                    onTap: () {},
-                    title: const Text(
-                      'View more information',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    const SizedBox(height: 10),
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return DetailsAnalytics();
+                            },
+                          ),
+                        );
+                      },
+                      title: const Text(
+                        'View more information',
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                      trailing: const Icon(
+                        Icons.add_circle,
+                        color: Colors.white,
+                      ),
                     ),
-                    trailing: const Icon(Icons.add_circle, color: Colors.white),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              
             ),
 
             SizedBox(height: 20),
@@ -191,29 +206,41 @@ class _HomePageState extends State<HomePage> {
                     crossAxisSpacing: 16,
                   ),
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: EdgeInsets.only(top: 25, bottom: 25),
-                      width: largeurEcran / 2 - 22,
-                      // height: ,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return InventoryScreen(index: index+1);
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(top: 25, bottom: 25),
+                        width: largeurEcran / 2 - 22,
+                        // height: ,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
 
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: backgroundColor,
-                            child: iconData[index],
-                          ),
-                          SizedBox(height: 12),
-                          Text(
-                            'Branch(${index + 1})',
-                            style: TextStyle(color: textColor, fontSize: 16),
-                          ),
-                        ],
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: backgroundColor,
+                              child: iconData[index],
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              'Branch(${index + 1})',
+                              style: TextStyle(color: textColor, fontSize: 16),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

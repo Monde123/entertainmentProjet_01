@@ -21,8 +21,8 @@ class _StaffOverviewState extends State<StaffOverview> {
         'image': faker.image.loremPicsum(),
 
         'nom': '${faker.person.lastName()}  ${faker.person.firstName()}',
-        'profession': faker.job,
-        'etoile': random.decimal(min: 3, scale: 5),
+        'profession': faker.job.title(),
+        'etoile': 4.0,
       });
     }
   }
@@ -47,10 +47,11 @@ class _StaffOverviewState extends State<StaffOverview> {
       ),
       body: Column(
         children: [
-          branchCard(widget.index, widthScreen*0.33),
-          SizedBox(height: 10,),
+          Padding(padding: EdgeInsets.all(20), child: branchCard(widget.index)),
+
+          SizedBox(height: 10),
           ListTile(
-            title: Text('Employee', style: style(18, 2)),
+            title: Text('Employee(${users.length})', style: style(18, 2)),
             trailing: Icon(
               FontAwesomeIcons.ellipsisVertical,
               color: textColor,
@@ -64,19 +65,17 @@ class _StaffOverviewState extends State<StaffOverview> {
                 itemCount: users.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.only(left: 24, right: 24, bottom: 8),
-                    margin: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                    margin: EdgeInsets.only(left: 20, right: 20, bottom: 12),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 24,
                         backgroundColor: Colors.white,
-                        foregroundImage: NetworkImage(
-                          users[index]['image'],
-                        ),
+                        foregroundImage: NetworkImage(users[index]['image']),
                       ),
                       title: Text(
                         '${users[index]['nom']} ',
@@ -88,7 +87,7 @@ class _StaffOverviewState extends State<StaffOverview> {
                         style: style(12, 1),
                       ),
                       trailing: Text(
-                        '${users[index]['etoile']}',
+                        '${users[index]['etoile'] + index / 10} ',
                         style: style(16, 3),
                       ),
                     ),
@@ -103,10 +102,10 @@ class _StaffOverviewState extends State<StaffOverview> {
   }
 }
 
-Widget branchCard(int index, double height) => Container(
-  padding: EdgeInsets.all(20),
-  margin: EdgeInsets.only(left: 24),
-  height: height,
+Widget branchCard(int index) => Container(
+  padding: EdgeInsets.only(left: 20),
+  //  margin: EdgeInsets.only(left: 24),
+  height: 150,
   decoration: BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(12),
@@ -114,8 +113,12 @@ Widget branchCard(int index, double height) => Container(
   child: Row(
     //mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      Column(
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 16,),
             Text('Branch ($index)', style: style(20, 3)),
             SizedBox(height: 10),
             SizedBox(
@@ -128,6 +131,7 @@ Widget branchCard(int index, double height) => Container(
                   SizedBox(width: 4),
                   SizedBox(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Brandon Agoua', style: style(16, 3)),
                         SizedBox(height: 4),
@@ -140,10 +144,12 @@ Widget branchCard(int index, double height) => Container(
             ),
           ],
         ),
-      
+      ),
+
       SizedBox(width: 20),
       Expanded(
         child: Container(
+          height: 150,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
 

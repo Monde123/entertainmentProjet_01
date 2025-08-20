@@ -19,13 +19,14 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        actionsPadding: EdgeInsets.all(20),
         backgroundColor: backgroundColor,
         title: Text('Detail analytics', style: style(18, 2)),
         centerTitle: true,
         actions: [
           CircleAvatar(
             backgroundColor: Colors.white,
-            child: Icon(FontAwesomeIcons.upRightFromSquare, size: 28),
+            child: Icon(FontAwesomeIcons.upRightFromSquare, size: 2),
           ),
         ],
       ),
@@ -36,105 +37,18 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               // debut du widget du container des stats
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                margin: EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Net Income',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: textColor,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '\$74000',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: textColor,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          '+25.22% (\$5.00)',
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
+              branchAnalytics(),
 
-                    BarChart(
-                      BarChartData(
-                        barGroups: [
-                          BarChartGroupData(
-                            x: 0,
-                            barRods: [
-                              BarChartRodData(toY: 5, color: primaryColor),
-                            ],
-                          ),
-                          BarChartGroupData(
-                            x: 1,
-                            barRods: [
-                              BarChartRodData(toY: 6, color: primaryColor),
-                            ],
-                          ),
-                          BarChartGroupData(
-                            x: 2,
-                            barRods: [
-                              BarChartRodData(toY: 8, color: primaryColor),
-                            ],
-                          ),
-                          BarChartGroupData(
-                            x: 3,
-                            barRods: [
-                              BarChartRodData(toY: 10, color: primaryColor),
-                            ],
-                          ),
-                          BarChartGroupData(
-                            x: 4,
-                            barRods: [
-                              BarChartRodData(toY: 12, color: primaryColor),
-                            ],
-                          ),
-                        ],
-
-                        titlesData: FlTitlesData(show: false),
-                        borderData: FlBorderData(show: false),
-                        gridData: FlGridData(show: false),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-//fin du widget des revenus(container)
-              
+              //fin du widget des revenus(container)
               const SizedBox(height: 12),
               ListTile(
                 title: Text('Analytics', style: style(18, 2)),
-                trailing: Icon(
-                  FontAwesomeIcons.ellipsisVertical,
-                  color: textColor,
-                  size: 28,
-                ),
+                trailing: Icon(Icons.menu_sharp, color: textColor, size: 24),
               ),
+              SizedBox(height: 12),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 12, bottom: 12),
+                  margin: EdgeInsets.only(left: 12, bottom: 0),
                   width: largeurEcran,
                   padding: EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
@@ -161,18 +75,19 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                           child: Icon(
                             FontAwesomeIcons.arrowRightArrowLeft,
                             color: Colors.white,
-                            size: 24,
+                            size: 20,
                           ),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      SizedBox(height: 16),
                       // Line chart implementation
                       Expanded(
                         child: LineChart(
                           LineChartData(
                             lineTouchData: LineTouchData(
                               touchTooltipData: LineTouchTooltipData(
-                                getTooltipColor:(LineBarSpot color)=> Colors.blueAccent,
+                                getTooltipColor:
+                                    (LineBarSpot color) => Colors.blueAccent,
                                 getTooltipItems: (
                                   List<LineBarSpot> touchedBarSpots,
                                 ) {
@@ -191,7 +106,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                             gridData: FlGridData(show: false),
                             titlesData: FlTitlesData(
                               show: true,
-                              bottomTitles: AxisTitles(
+                              topTitles: AxisTitles(
                                 sideTitles: SideTitles(
                                   getTitlesWidget: (value, meta) {
                                     switch (value.toInt()) {
@@ -209,11 +124,11 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                                   },
                                 ),
                               ),
-                              leftTitles: AxisTitles(
+                              rightTitles: AxisTitles(
                                 sideTitles: SideTitles(
-                                  getTitlesWidget: (value, meta) {
+                                  /* getTitlesWidget: (value, meta) {
                                     return Text(value.toInt().toString());
-                                  },
+                                  },*/
                                   interval: 10,
                                   reservedSize: 30,
                                 ),
@@ -223,7 +138,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                             minX: 0,
                             maxX: 4,
                             minY: 0,
-                            maxY: 100,
+                            maxY: 90,
                             lineBarsData: [
                               LineChartBarData(
                                 spots: [
@@ -266,6 +181,87 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container branchAnalytics() {
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      margin: EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Net Income',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: textColor,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '\$74000',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: textColor,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  '+25.22% (\$5.00)',
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(
+            width: 60,
+            height: 60,
+            child: BarChart(
+              BarChartData(
+                barGroups: [
+                  BarChartGroupData(
+                    x: 0,
+                    barRods: [BarChartRodData(toY: 1, color: primaryColor)],
+                  ),
+                  BarChartGroupData(
+                    x: 1,
+                    barRods: [BarChartRodData(toY: 2, color: primaryColor)],
+                  ),
+                  BarChartGroupData(
+                    x: 2,
+                    barRods: [BarChartRodData(toY: 3, color: primaryColor)],
+                  ),
+                  BarChartGroupData(
+                    x: 3,
+                    barRods: [BarChartRodData(toY: 4, color: primaryColor)],
+                  ),
+                ],
+                titlesData: FlTitlesData(show: false),
+                borderData: FlBorderData(show: false),
+                gridData: FlGridData(show: false),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
