@@ -1,5 +1,6 @@
 // main.dart
 import 'package:entert_projet_01/pages/home_page.dart';
+import 'package:entert_projet_01/pages/profile_page.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,7 +37,7 @@ class _NavigationPageState extends State<NavigationPage> {
     HomePage(),
     Center(child: Text('AUcun Message disponible')),
     Center(child: Text('AUcune Notification disponible')),
-    Center(child: Text('AUcun utilisateur disponible')),
+    ProfilePage(),
   ];
 
   @override
@@ -48,6 +49,7 @@ class _NavigationPageState extends State<NavigationPage> {
       bottomNavigationBar: Container(
         margin: EdgeInsets.all(20),
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
           color: Colors.white,
           boxShadow: [
             BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1)),
@@ -55,7 +57,7 @@ class _NavigationPageState extends State<NavigationPage> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
@@ -68,8 +70,8 @@ class _NavigationPageState extends State<NavigationPage> {
               color: Colors.black,
               tabs: [
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
-                GButton(icon: FontAwesomeIcons.solidCommentDots, text: 'Likes'),
-                GButton(icon: FontAwesomeIcons.solidBell, text: 'Search'),
+                GButton(icon: FontAwesomeIcons.solidCommentDots, text: 'Messages'),
+                GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifications'),
                 GButton(icon: FontAwesomeIcons.solidUser, text: 'Profile'),
               ],
               selectedIndex: _selectedIndex,
