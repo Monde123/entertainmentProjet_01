@@ -1,4 +1,5 @@
 // main.dart
+import 'package:entert_projet_01/pages/authentificationScreens/login_screen.dart';
 import 'package:entert_projet_01/pages/home_page.dart';
 import 'package:entert_projet_01/pages/profile_page.dart';
 import 'package:entert_projet_01/providersTest/stateManagmentWithInherit/test.dart';
@@ -37,7 +38,7 @@ class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
     HomePage(),
     Center(child: Text('AUcun Message disponible')),
-    Center(child: Text('AUcune Notification disponible')),
+    LoginScreen(),
     ProfilePage(),
   ];
 
@@ -72,7 +73,7 @@ class _NavigationPageState extends State<NavigationPage> {
               tabs: [
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
                 GButton(icon: FontAwesomeIcons.solidCommentDots, text: 'Messages'),
-                GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifications'),
+                GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifi...'),
                 GButton(icon: FontAwesomeIcons.solidUser, text: 'Profile'),
               ],
               selectedIndex: _selectedIndex,
