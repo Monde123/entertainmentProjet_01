@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "386190378061",
+    "project_id": "entertainment-e2b82",
+    "storage_bucket": "entertainment-e2b82.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386190378061:android:59fb5ad35319daf21a8804",
+        "android_client_info": {
+          "package_name": "com.example.entert_projet_01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALDyr9u_idhnfeO8J3aJvcuY-3KyQq7do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
