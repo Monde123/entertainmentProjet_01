@@ -26,7 +26,7 @@ class UserProvider with ChangeNotifier {
         password: passWord,
       );
 
-      await _loadUser(cred.user!.uid);
+      await loadUser(cred.user!.uid);
     } on FirebaseAuthException catch (e) {
       _errorMessage = _mapFirebaseError(e);
     } catch (e) {
@@ -70,7 +70,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<void> _loadUser(String uid) async {
+  Future<void> loadUser(String uid) async {
     final doc = await _db.collection('Users').doc(uid).get();
     if (doc.exists && doc.data() != null) {
       final userData = doc.data()!;
@@ -85,7 +85,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _signOut() async {
+  Future<void> signOut() async {
     await _auth.signOut();
     _userModel = null;
     notifyListeners();

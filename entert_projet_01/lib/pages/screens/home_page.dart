@@ -1,11 +1,13 @@
 // pages/screens/home_page.dart
 import 'package:entert_projet_01/pages/screens/details_analytics.dart';
 import 'package:entert_projet_01/pages/screens/inventory.dart';
+import 'package:entert_projet_01/providers/user_provider.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +19,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
+    final user = userProvider.user;
+
+    String userName= user ==null ? 'John Doe': user.displayName;
+
     List<Icon> iconData = [
       Icon(FontAwesomeIcons.shirt, color: primaryColor, size: 28),
       Icon(FontAwesomeIcons.shoePrints, color: Colors.amber, size: 28),
@@ -45,7 +53,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 5),
               Text(
-                faker.person.firstName(),
+               userName,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -69,120 +77,113 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-             Container(
-                width: largeurEcran - 40,
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      width: largeurEcran - 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
+            Container(
+              width: largeurEcran - 40,
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    width: largeurEcran - 40,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(Icons.change_circle_rounded, color: textColor),
+                            Icon(Icons.more_horiz_sharp, color: textColor),
+                          ],
+                        ),
+
+                        const SizedBox(height: 10),
+                        //widget de la carte analytics
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                Icons.change_circle_rounded,
-                                color:textColor,
-                              ),
-                              Icon(Icons.more_horiz_sharp, color: textColor),
-                            ],
-                          ),
-
-                          const SizedBox(height: 10),
-                          //widget de la carte analytics
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Net Income',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: textColor,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '\$74000',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: textColor,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const Text(
-                                      '+25.22% (\$5.00)',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 14,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                CircularPercentIndicator(
-                                  radius: 40.0,
-                                  lineWidth: 12.0,
-                                  percent: 0.78,
-                                  center: Text(
-                                    "78%",
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Net Income',
                                     style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: textColor,
                                     ),
                                   ),
-                                  progressColor: Colors.blue,
-                                  backgroundColor: Colors.grey[200]!,
-                                  circularStrokeCap: CircularStrokeCap.round,
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    '\$74000',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: textColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    '+25.22% (\$5.00)',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              CircularPercentIndicator(
+                                radius: 40.0,
+                                lineWidth: 12.0,
+                                percent: 0.78,
+                                center: Text(
+                                  "78%",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: primaryColor,
+                                  ),
                                 ),
-                              ],
-                            ),
+                                progressColor: Colors.blue,
+                                backgroundColor: Colors.grey[200]!,
+                                circularStrokeCap: CircularStrokeCap.round,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 10),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return DetailsAnalytics();
-                            },
-                          ),
-                        );
-                      },
-                      title: const Text(
-                        'View more information',
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
-                      trailing: const Icon(
-                        Icons.add_circle,
-                        color: Colors.white,
-                      ),
+                  ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return DetailsAnalytics();
+                          },
+                        ),
+                      );
+                    },
+                    title: const Text(
+                      'View more information',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
-                  ],
-                ),
-              
+                    trailing: const Icon(Icons.add_circle, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
 
             SizedBox(height: 20),
@@ -212,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return InventoryScreen(index: index+1);
+                              return InventoryScreen(index: index + 1);
                             },
                           ),
                         );

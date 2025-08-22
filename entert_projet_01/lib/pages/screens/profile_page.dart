@@ -23,6 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+  
+
     final user = userProvider.user;
     if (user == null) {
       return Scaffold(body: Center(child: Text('Aucun utilisateur connecté')));
@@ -43,8 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Text(faker.person.name(), style: style(18, 3)),
-                  SizedBox(height: 12),
                   Container(
                     padding: EdgeInsets.all(10),
                     width: 120,
@@ -73,6 +73,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 12),
+                  Text(user.displayName, style: style(18, 3)),
                 ],
               ),
             ),
@@ -91,21 +93,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
 
-            Container(
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.logout, size: 24, color: Colors.red),
+            GestureDetector(
+              onTap: () async {
+                await userProvider.signOut();
+              },
+              child: Container(
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                title: Text(
-                  'Log Out',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.logout, size: 24, color: Colors.red),
+                  ),
+                  title: Text(
+                    'Log Out',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               ),
             ),
