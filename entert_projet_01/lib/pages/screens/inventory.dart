@@ -1,5 +1,5 @@
-// pages/inventory.dart
-import 'package:entert_projet_01/pages/transfer_inventory.dart';
+// pages/screens/inventory.dart
+import 'package:entert_projet_01/pages/screens/transfer_inventory.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

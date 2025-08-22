@@ -1,7 +1,7 @@
 // main.dart
-import 'package:entert_projet_01/pages/authentificationScreens/login_screen.dart';
-import 'package:entert_projet_01/pages/home_page.dart';
-import 'package:entert_projet_01/pages/profile_page.dart';
+import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
+import 'package:entert_projet_01/pages/screens/home_page.dart';
+import 'package:entert_projet_01/pages/screens/profile_page.dart';
 
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:flutter/material.dart';

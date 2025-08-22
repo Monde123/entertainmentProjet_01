@@ -1,6 +1,6 @@
-// pages/home_page.dart
-import 'package:entert_projet_01/pages/details_analytics.dart';
-import 'package:entert_projet_01/pages/inventory.dart';
+// pages/screens/home_page.dart
+import 'package:entert_projet_01/pages/screens/details_analytics.dart';
+import 'package:entert_projet_01/pages/screens/inventory.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
