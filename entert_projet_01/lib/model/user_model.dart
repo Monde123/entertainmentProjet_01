@@ -2,8 +2,6 @@
 
 import 'dart:core';
 
-import 'package:firebase_auth/firebase_auth.dart';
-
 class UserModel {
   UserModel({required this.mail, required this.uid, required this.displayName});
   final String uid;

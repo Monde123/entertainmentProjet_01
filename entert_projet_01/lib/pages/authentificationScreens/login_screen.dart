@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       prefixIcon: Icon(icon, size: 22, color: primaryColor),
     ),
     validator: (value) {
-      if (value == null || value.isEmpty) {
+      if (value?.trim() == null || value!.isEmpty) {
         return '$type ne peut être vide';
       }
       if (type == 'mail') {
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
           return 'Entrez un mail valide';
         }
       }
-      if (type == 'passWorld') {
+      if (type == 'passWord') {
         if (value.length < 6) {
           return 'entrez un mot de passe valide';
         }

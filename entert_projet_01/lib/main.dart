@@ -2,7 +2,7 @@
 import 'package:entert_projet_01/pages/authentificationScreens/login_screen.dart';
 import 'package:entert_projet_01/pages/home_page.dart';
 import 'package:entert_projet_01/pages/profile_page.dart';
-import 'package:entert_projet_01/providersTest/stateManagmentWithInherit/test.dart';
+
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
