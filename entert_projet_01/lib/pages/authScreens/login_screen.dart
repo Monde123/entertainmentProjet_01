@@ -1,4 +1,4 @@
-// pages/authentificationScreens/login_screen.dart
+// pages/authScreens/login_screen.dart
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       if (type == 'mail') {
         if (value.contains(
-              RegExp('r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'),
+              RegExp('r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}'),
             ) ==
             false) {
           return 'Entrez un mail valide';
@@ -49,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           return 'entrez un mot de passe valide';
         }
       }
+      return null;
     },
   );
 
@@ -91,23 +92,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                     
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     onPressed: () {},
+
                     child: Text(
-                        'Se Connecter',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      'Se Connecter',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                    
+                    ),
                   ),
                 ),
                 SizedBox(height: 16),
-                Center(child: Text('''Pas encore de Compte ?\t S'inscrire''')),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Pas de compte ?", style: style(12, 2),),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
+                  child: Text(
+                    "S'inscrire",
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
               ],
             ),
           ),

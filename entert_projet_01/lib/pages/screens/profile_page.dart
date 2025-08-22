@@ -1,4 +1,4 @@
-// pages/profile_page.dart
+// pages/screens/profile_page.dart
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
-                        FontAwesomeIcons.solidEdit,
+                        FontAwesomeIcons.solidPenToSquare,
                         color: textColor,
                         size: 24,
                       ),
