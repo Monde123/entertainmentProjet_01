@@ -1,8 +1,10 @@
 // pages/screens/profile_page.dart
+import 'package:entert_projet_01/providers/user_provider.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,6 +22,11 @@ class _ProfilePageState extends State<ProfilePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    if (user == null) {
+      return Scaffold(body: Center(child: Text('Aucun utilisateur connecté')));
+    }
     return Scaffold(
       backgroundColor: backgroundColor,
 

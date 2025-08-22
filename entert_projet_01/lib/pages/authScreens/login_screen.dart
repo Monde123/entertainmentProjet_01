@@ -1,6 +1,11 @@
 // pages/authScreens/login_screen.dart
+import 'package:entert_projet_01/main.dart';
+import 'package:entert_projet_01/pages/authScreens/register_screen.dart';
+import 'package:entert_projet_01/providers/user_provider.dart';
 import 'package:entert_projet_01/theme/colors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,16 +15,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _passWord = TextEditingController();
-  final _formKey = GlobalKey();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passWordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   Widget textFormField(
     TextEditingController controller,
     String type,
     IconData icon,
   ) => TextFormField(
+    
     controller: controller,
     decoration: InputDecoration(
+      filled: true,
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
@@ -53,8 +62,40 @@ class _LoginScreenState extends State<LoginScreen> {
     },
   );
 
+  void _login(UserProvider auth) async {
+    if (!_formKey.currentState!.validate()) return;
+
+    await auth.login(
+       _emailController.text.trim(),
+      _passWordController.text.trim(),
+     
+    );
+    if (auth.errorMessage != null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(auth.errorMessage!)));
+      return;
+    }
+
+    // 🎯 Redirection vers page login
+  Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => NavigationPage()),
+        (route) => false,
+      );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passWordController.dispose();
+  
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+     final auth = context.watch<UserProvider>();
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(backgroundColor: backgroundColor),
@@ -64,8 +105,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment:
+               MainAxisAlignment.start,
               children: [
+                SizedBox(height: 24,),
                 Align(
                   alignment: Alignment.center,
                   child: Column(
@@ -85,23 +129,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                textFormField(_email, 'mail', Icons.mail),
+                textFormField(_emailController, 'mail', Icons.mail),
                 SizedBox(height: 18),
-                textFormField(_passWord, 'passWord', Icons.password),
+                textFormField(_passWordController, 'passWord', Icons.password),
                 SizedBox(height: 26),
-                Align(
-                  alignment: Alignment.center,
+                SizedBox(
+                  width: double.infinity,
+
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                    
                       backgroundColor: primaryColor,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: auth.isLoading? null:()=>_login(auth),
 
-                    child: Text(
+                    child: auth.isLoading? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
+                    ):
+                     Text(
                       'Se Connecter',
                       style: TextStyle(
                         color: Colors.white,
@@ -112,28 +166,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Pas de compte ?", style: style(12, 2),),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
-                  },
-                  child: Text(
-                    "S'inscrire",
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Pas de compte ?", style: style(12, 2)),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignInPage()),
+                        );
+                      },
+                      child: Text(
+                        "S'inscrire",
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
               ],
             ),
           ),

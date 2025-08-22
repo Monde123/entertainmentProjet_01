@@ -88,7 +88,7 @@ class _NavigationPageState extends State<NavigationPage> {
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
                 GButton(
                   icon: FontAwesomeIcons.solidCommentDots,
-                  text: 'Messages',
+                  text: 'Messa.',
                 ),
                 GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifi...'),
                 GButton(icon: FontAwesomeIcons.solidUser, text: 'Profile'),

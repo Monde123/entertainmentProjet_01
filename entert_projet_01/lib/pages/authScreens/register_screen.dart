@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
             child:   Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Connexion', style: style(20, 3)),
+                Text('Inscription', style: style(20, 3)),
                 SizedBox(height: 12),
 
                 Text(
@@ -100,10 +100,12 @@ class _SignInPageState extends State<SignInPage> {
                       fillColor: Colors.white,
                       prefixIcon: Icon(Icons.person),
                       prefixIconColor: primaryColor,
+                      label: Text('name', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+
                       hintText: "Entrer votre nom",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     validator: validateName,
@@ -114,14 +116,16 @@ class _SignInPageState extends State<SignInPage> {
                   TextFormField(
                     controller: _surnameController,
                     decoration: InputDecoration(
+                      label: Text('firstName', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+
                       filled: true,
                       fillColor: Colors.white,
                       prefixIcon: Icon(Icons.person),
-                      prefixIconColor: secondaryColor,
+                      prefixIconColor: primaryColor,
                       hintText: "Entrer votre prénom",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     validator: (value) {
@@ -151,14 +155,16 @@ class _SignInPageState extends State<SignInPage> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
+                      label: Text('mail', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+
                       filled: true,
                       fillColor: Colors.white,
                       prefixIcon: Icon(Icons.mail),
-                      prefixIconColor: secondaryColor,
+                      prefixIconColor: primaryColor,
                       hintText: "Entrer votre email",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     validator: validateEmail,
@@ -169,10 +175,13 @@ class _SignInPageState extends State<SignInPage> {
                   TextFormField(
                     controller: _mdpController,
                     obscureText: isObscure,
+
                     decoration: InputDecoration(
+                      label: Text('passWord', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+
                       filled: true,
                       fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.key),
+                      prefixIcon: Icon(Icons.password),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -183,13 +192,13 @@ class _SignInPageState extends State<SignInPage> {
                           isObscure ? Icons.visibility : Icons.visibility_off,
                         ),
                       ),
-                      prefixIconColor: secondaryColor,
-                      suffixIconColor: secondaryColor,
+                      prefixIconColor: primaryColor,
+                      suffixIconColor: primaryColor,
                       hintText: "Entrer votre mot de passe",
 
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     validator: (value) {
@@ -204,6 +213,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
 
                   SizedBox(height: 16),
+
                   //verifiacation du mot de passe
                   TextFormField(
                     controller: _mdpConfirmController,
@@ -211,7 +221,7 @@ class _SignInPageState extends State<SignInPage> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.key),
+                      prefixIcon: Icon(Icons.password),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -222,12 +232,13 @@ class _SignInPageState extends State<SignInPage> {
                           isObscure ? Icons.visibility : Icons.visibility_off,
                         ),
                       ),
-                      prefixIconColor: secondaryColor,
-                      suffixIconColor: secondaryColor,
+                      prefixIconColor: primaryColor,
+                      label: Text('passWord', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+                      suffixIconColor: primaryColor,
                       hintText: "Confirmez votre mot de passe",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black12),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
                     validator: (value) {
