@@ -91,19 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                     
+                    ),
                     onPressed: () {},
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        left: 30,
-                        right: 30,
-                        top: 12,
-                        bottom: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
+                    child: Text(
                         'Se Connecter',
                         style: TextStyle(
                           color: Colors.white,
@@ -111,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
+                    
                   ),
                 ),
                 SizedBox(height: 16),
