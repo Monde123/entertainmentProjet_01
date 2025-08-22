@@ -44,10 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
         return '$type ne peut être vide';
       }
       if (type == 'mail') {
-        if (value.contains(
-              RegExp('r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}'),
-            ) ==
-            false) {
+          final nameExp = RegExp(r"^[A-Za-zÀ-ÖØ-öø-ÿ \-']+$");
+        if (!nameExp.hasMatch(value.trim())) {
           return 'Entrez un mail valide';
         }
       }
@@ -101,91 +99,99 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(20),
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height: 24),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Text(
-                        'Connexion',
-                        style: style(24, 3),
-                        textAlign: TextAlign.center,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 24),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          'Connexion',
+                          style: style(24, 3),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'Veuillez remplir les informations pour continuer',
+                          style: style(12, 1),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  textFormField(_emailController, 'mail', Icons.mail),
+                  SizedBox(height: 18),
+                  textFormField(
+                    _passWordController,
+                    'passWord',
+                    Icons.password,
+                  ),
+                  SizedBox(height: 26),
+                  SizedBox(
+                    width: double.infinity,
+
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      SizedBox(height: 12),
-                      Text(
-                        'Veuillez remplir les informations pour continuer',
-                        style: style(12, 1),
+                      onPressed: auth.isLoading ? null : () => _login(auth),
+
+                      child:
+                          auth.isLoading
+                              ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                              : Text(
+                                'Se Connecter',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Pas de compte ?", style: style(12, 2)),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInPage(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "S'inscrire",
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 16),
-                textFormField(_emailController, 'mail', Icons.mail),
-                SizedBox(height: 18),
-                textFormField(_passWordController, 'passWord', Icons.password),
-                SizedBox(height: 26),
-                SizedBox(
-                  width: double.infinity,
-
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: auth.isLoading ? null : () => _login(auth),
-
-                    child:
-                        auth.isLoading
-                            ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                            : Text(
-                              'Se Connecter',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Pas de compte ?", style: style(12, 2)),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignInPage()),
-                        );
-                      },
-                      child: Text(
-                        "S'inscrire",
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

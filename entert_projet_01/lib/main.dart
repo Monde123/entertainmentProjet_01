@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'first enttertainment',
 
-      home: const NavigationPage(),
+      home: const LoginScreen(),
     );
   }
 }
@@ -48,8 +48,8 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
-    SignInPage(),
-    LoginScreen(),
+    Center(child: Text('Aucune données ')),
+    Center(child: Text('Aucune données ')),
     ProfilePage(),
   ];
 
@@ -83,12 +83,12 @@ class _NavigationPageState extends State<NavigationPage> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.black,
+              color: secondaryColor,
               tabs: [
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
                 GButton(
                   icon: FontAwesomeIcons.solidCommentDots,
-                  text: 'Messa.',
+                  text: 'Messa...',
                 ),
                 GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifi...'),
                 GButton(icon: FontAwesomeIcons.solidUser, text: 'Profile'),
