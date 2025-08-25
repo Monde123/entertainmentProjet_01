@@ -44,8 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
         return '$type ne peut être vide';
       }
       if (type == 'mail') {
-          final nameExp = RegExp(r"^[A-Za-zÀ-ÖØ-öø-ÿ \-']+$");
-        if (!nameExp.hasMatch(value.trim())) {
+            final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+        if (!emailRegExp.hasMatch(value.trim())) {
           return 'Entrez un mail valide';
         }
       }

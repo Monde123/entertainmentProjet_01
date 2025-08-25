@@ -1,4 +1,5 @@
 // pages/screens/profile_page.dart
+import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
 import 'package:entert_projet_01/providers/user_provider.dart';
 import 'package:entert_projet_01/theme/colors.dart';
 import 'package:faker/faker.dart';
@@ -96,6 +97,9 @@ class _ProfilePageState extends State<ProfilePage> {
             GestureDetector(
               onTap: () async {
                 await userProvider.signOut();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
               child: Container(
                 padding: EdgeInsets.all(8),

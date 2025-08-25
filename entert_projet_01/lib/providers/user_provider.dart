@@ -9,12 +9,25 @@ class UserProvider with ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   bool _isLoading = false;
   String? _errorMessage;
+
   UserModel? _userModel;
   UserModel? get user => _userModel;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
+  bool get isConnected => user != null;
   void _isSetting(bool v) {
     _isLoading = v;
+  }
+
+  UserProvider() {
+    _auth.authStateChanges().listen((user) {
+      if (user != null) {
+        loadUser(user.uid);
+      } else {
+        _userModel = null;
+        notifyListeners();
+      }
+    });
   }
 
   Future<void> login(String mail, String passWord) async {
@@ -66,6 +79,7 @@ class UserProvider with ChangeNotifier {
       _errorMessage = 'Erreur inattendue';
     } finally {
       _isSetting(false);
+
       notifyListeners();
     }
   }
@@ -88,6 +102,7 @@ class UserProvider with ChangeNotifier {
   Future<void> signOut() async {
     await _auth.signOut();
     _userModel = null;
+
     notifyListeners();
   }
 

@@ -1,6 +1,5 @@
 // main.dart
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
-import 'package:entert_projet_01/pages/authScreens/register_screen.dart';
 import 'package:entert_projet_01/pages/screens/home_page.dart';
 import 'package:entert_projet_01/pages/screens/profile_page.dart';
 import 'package:provider/provider.dart';
@@ -23,16 +22,28 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
+    
+    final userProvider = Provider.of<UserProvider>(context);
+  
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'first enttertainment',
 
-      home: const LoginScreen(),
+      home:
+        userProvider.isConnected
+              ? const NavigationPage()
+              : const LoginScreen(),
     );
   }
 }
@@ -77,10 +88,10 @@ class _NavigationPageState extends State<NavigationPage> {
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
-              gap: 8,
+              gap: 4,
               activeColor: textColor,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: secondaryColor,
@@ -91,7 +102,7 @@ class _NavigationPageState extends State<NavigationPage> {
                   text: 'Messa...',
                 ),
                 GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifi...'),
-                GButton(icon: FontAwesomeIcons.solidUser, text: 'Profile'),
+                GButton(icon: FontAwesomeIcons.solidUser, text: 'Profi.'),
               ],
               selectedIndex: _selectedIndex,
               onTabChange: (index) {
