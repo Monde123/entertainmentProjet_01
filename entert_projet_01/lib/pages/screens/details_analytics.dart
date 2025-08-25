@@ -26,7 +26,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
         actions: [
           CircleAvatar(
             backgroundColor: Colors.white,
-            child: Icon(FontAwesomeIcons.upRightFromSquare, size: 2),
+            child: Icon(FontAwesomeIcons.upRightFromSquare, size: 24),
           ),
         ],
       ),
