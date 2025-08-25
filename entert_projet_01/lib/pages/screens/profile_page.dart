@@ -1,7 +1,7 @@
 // pages/screens/profile_page.dart
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
 import 'package:entert_projet_01/providers/user_provider.dart';
-import 'package:entert_projet_01/theme/colors.dart';
+import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -1,10 +1,11 @@
 // main.dart
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
 import 'package:entert_projet_01/pages/screens/home_page.dart';
+import 'package:entert_projet_01/pages/screens/products.dart';
 import 'package:entert_projet_01/pages/screens/profile_page.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_provider.dart';
-import 'package:entert_projet_01/theme/colors.dart';
+import 'package:entert_projet_01/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,16 +33,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    
     final userProvider = Provider.of<UserProvider>(context);
-  
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'first enttertainment',
 
       home:
-        userProvider.isConnected
+          userProvider.isConnected
               ? const NavigationPage()
               : const LoginScreen(),
     );
@@ -59,7 +58,7 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
-    Center(child: Text('Aucune données ')),
+    ProductsPage(),
     Center(child: Text('Aucune données ')),
     ProfilePage(),
   ];
@@ -97,11 +96,12 @@ class _NavigationPageState extends State<NavigationPage> {
               color: secondaryColor,
               tabs: [
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
+                GButton(icon: FontAwesomeIcons.productHunt, text: 'Produits'),
+
                 GButton(
                   icon: FontAwesomeIcons.solidCommentDots,
                   text: 'Messa...',
                 ),
-                GButton(icon: FontAwesomeIcons.solidBell, text: 'Notifi...'),
                 GButton(icon: FontAwesomeIcons.solidUser, text: 'Profi.'),
               ],
               selectedIndex: _selectedIndex,

@@ -1,6 +1,6 @@
-// pages/transfer_inventory.dart
+// pages/screens/transfer_inventory.dart
 import 'package:entert_projet_01/pages/screens/staff_overview.dart';
-import 'package:entert_projet_01/theme/colors.dart';
+import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

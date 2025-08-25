@@ -1,8 +1,8 @@
 // model/product_model.dart
 
-
 class ProductModel {
   String name;
+  String? produitUrl;
   String price;
   String quality;
   String quantity;
@@ -11,6 +11,7 @@ class ProductModel {
     required this.price,
     required this.quality,
     required this.quantity,
+     this.produitUrl
   });
   factory ProductModel.fromMap(Map<String, dynamic> v) {
     return ProductModel(
@@ -18,6 +19,7 @@ class ProductModel {
       price: 'price',
       quality: 'quality',
       quantity: 'quantity',
+      produitUrl: 'produitUrl'
     );
   }
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class ProductModel {
       'price': price,
       'quality': quality,
       'quantity': quantity,
+      'produitUrl':produitUrl,
     };
   }
 }

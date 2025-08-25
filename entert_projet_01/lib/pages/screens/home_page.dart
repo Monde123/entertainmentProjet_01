@@ -2,7 +2,7 @@
 import 'package:entert_projet_01/pages/screens/details_analytics.dart';
 import 'package:entert_projet_01/pages/screens/inventory.dart';
 import 'package:entert_projet_01/providers/user_provider.dart';
-import 'package:entert_projet_01/theme/colors.dart';
+import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
