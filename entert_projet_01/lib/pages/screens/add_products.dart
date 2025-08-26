@@ -16,25 +16,36 @@ class _AddProductsState extends State<AddProducts> {
   final _form = GlobalKey<FormState>();
   final _productsNameCtrl = TextEditingController();
   final _productsPriceCtrl = TextEditingController();
-//  final _productsQualityCtrl;
-  final _productsQuantityCtrl = TextEditingController();
+  String? _productsQualityCtrl;
+  final _productsDescriptionCtrl = TextEditingController();
   final _productsUrlCtrl = TextEditingController();
-  void addProducts(
-    String name,
-    double price,
-    String quality,
-    String? quantity,
-    String ? url,
-  ) async {
-    final product = ProductModel(
-      name: name,
-      price: price,
-      quality: quality,
-      quantity: quantity,
-      produitUrl: url,
-    );
-    await _db.collection('Products').add(product.toMap());
-    print('nouveau document créee');
+  //function for add products
+  void addProducts() async {
+    if (_form.currentState!.validate()) {
+      final product = ProductModel(
+        name: _productsNameCtrl.text,
+        price: double.parse(_productsPriceCtrl.text),
+        quality: _productsQualityCtrl.toString(),
+        description: _productsDescriptionCtrl.text,
+        produitUrl: _productsUrlCtrl.text,
+      );
+      print('debut de la creation du document');
+      await _db.collection('Products').add(product.toMap());
+
+      print('nouveau document crée');
+      _form.currentState!.reset();
+    }
+  }
+
+  //end function add products
+  @override
+  void dispose() {
+    _productsDescriptionCtrl.text;
+    _productsNameCtrl.text;
+    _productsPriceCtrl.text;
+    _productsQualityCtrl;
+    _productsUrlCtrl.text;
+    super.dispose();
   }
 
   @override
@@ -52,12 +63,107 @@ class _AddProductsState extends State<AddProducts> {
             key: _form,
             child: Column(
               children: [
-                Center(
-                  child: IconButton(
-                    onPressed: () {
-                      addProducts('Tomato', 1000, 'high', '','');
-                    },
-                    icon: Icon(Icons.add),
+                // begin of form of editing products's pictures
+                Container(
+                  // width: double.infinity,
+                  padding: EdgeInsets.only(
+                    top: 30,
+                    bottom: 30,
+                    left: 12,
+                    right: 12,
+                  ),
+                  margin: EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_a_photo_sharp,
+                        color: secondaryColor,
+                        size: 32,
+                      ),
+                      Text(
+                        'Choisir une photo\n ou ',
+                        style: style(12, 2),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 5),
+                      TextFormField(
+                        controller: _productsUrlCtrl,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'ce champ ne peut pas être vide';
+                          }
+
+                          return null;
+                        },
+
+                        decoration: InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.only(left: 50, right: 50),
+                          hintText: "Entrez l'url de la photo du produit",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // end of form of editing products's pictures
+                formulaire(_productsNameCtrl, 'nom'), // name form
+                SizedBox(height: 20),
+                formulaire(_productsDescriptionCtrl, 'description'),
+                SizedBox(height: 20),
+                formulaire(_productsPriceCtrl, 'prix'), // price form
+                SizedBox(height: 20),
+
+                DropdownButtonFormField(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  hint: Text('Quelle est la qualité du produit'),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  value: _productsQualityCtrl,
+                  items: [
+                    DropdownMenuItem(value: 'medium', child: Text('medium')),
+                    DropdownMenuItem(value: 'high', child: Text('high')),
+                    DropdownMenuItem(
+                      value: 'very high',
+                      child: Text('very high'),
+                    ),
+                  ],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _productsQualityCtrl = newValue;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Choississez une qualité valide';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+                    backgroundColor: primaryColor,
+                  ),
+                  onPressed: addProducts,
+
+                  child: Text(
+                    'Add Product',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -68,3 +174,42 @@ class _AddProductsState extends State<AddProducts> {
     );
   }
 }
+
+// formulaire pour le textEditing form du nom, du prix/description
+Widget formulaire(TextEditingController ctrl, String type) => TextFormField(
+  controller: ctrl,
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'ce champ ne peut pas être vide';
+    }
+    if (type == 'nom' && value.length < 3) {
+      return 'Le nom doit être 3 caractères ';
+    }
+    if (type == 'prix') {
+      final double? tryParse = double.tryParse(value);
+      if (tryParse!.isNegative || tryParse.isNaN) {
+        return 'entrez un prix corect';
+      }
+    }
+    return null;
+  },
+  keyboardType:
+      type == 'prix'
+          ? TextInputType.numberWithOptions(decimal: true)
+          : type == 'description'
+          ? TextInputType.multiline
+          : TextInputType.text,
+  decoration: InputDecoration(
+    constraints: BoxConstraints(),
+    filled: true,
+    fillColor: Colors.white,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+
+      gapPadding: 8,
+    ),
+    hintText: "Entrez le $type du produit",
+    label: Text(type, style: style(12, 1)),
+  ),
+);
+// fin du formulaire

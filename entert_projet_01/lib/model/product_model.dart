@@ -5,12 +5,12 @@ class ProductModel {
   String? produitUrl;
   double price;
   String quality;
-  String? quantity;
+  String? description;
   ProductModel({
     required this.name,
     required this.price,
     required this.quality,
-    this.quantity,
+    this.description,
     this.produitUrl,
   });
   factory ProductModel.fromMap(Map<String, dynamic> v) {
@@ -18,7 +18,7 @@ class ProductModel {
       name: (v['name'] ?? 'produit inconnu'),
       price: (v['price'] ?? 0.0),
       quality: (v['quality'] ?? 'indisponible'),
-      quantity: (v['quantity']),
+      description: (v['description']),
       produitUrl: v['produitUrl'],
     );
   }
@@ -27,7 +27,7 @@ class ProductModel {
       'name': name,
       'price': price,
       'quality': quality,
-      'quantity': quantity,
+      'description': description,
       'produitUrl': produitUrl,
     };
   }

@@ -25,13 +25,17 @@ class _LoginScreenState extends State<LoginScreen> {
     IconData icon,
   ) => TextFormField(
     controller: controller,
+    keyboardType: TextInputType.emailAddress,
     decoration: InputDecoration(
       filled: true,
       fillColor: Colors.white,
+      
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         gapPadding: 16,
       ),
+
+      
       label: Text(
         type,
         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
