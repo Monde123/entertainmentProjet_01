@@ -1,5 +1,6 @@
 // main.dart
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
+import 'package:entert_projet_01/pages/screens/add_products.dart';
 import 'package:entert_projet_01/pages/screens/home_page.dart';
 import 'package:entert_projet_01/pages/screens/products.dart';
 import 'package:entert_projet_01/pages/screens/profile_page.dart';
@@ -59,7 +60,7 @@ class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
     HomePage(),
     ProductsPage(),
-    Center(child: Text('Aucune données ')),
+    AddProducts(),
     ProfilePage(),
   ];
 

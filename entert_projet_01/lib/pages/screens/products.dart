@@ -47,95 +47,14 @@ class _ProductsPageState extends State<ProductsPage> {
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child:  CircularProgressIndicator(
-                        backgroundColor: primaryColor,
-                        strokeWidth: 20,
-                        
-                      ),
+                        child: CircularProgressIndicator(
+                          backgroundColor: primaryColor,
+                          strokeWidth: 20,
+                        ),
                       );
                     }
-                    if (snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        // physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 2,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 20,
-                            mainAxisExtent: 150,
-                        ),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    // padding: EdgeInsets.all(10),
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScUfdvt0l4tq5x51ysl8s0-QWdSzEdrgAxjg&s',
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: CircleAvatar(
-                                        backgroundColor: backgroundColor,
-                                        child: Icon(
-                                          Icons.shopping_cart,
-                                          color: primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.all(12),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'E commerce',
-                                              style: style(14, 2),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            SizedBox(height: 8),
-                                            Text(
-                                              '\$ ${1200}',
-                                              style: style(12, 1),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Text('high'),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
+                    if (snapshot.data!.docs.isEmpty) {
+                      return Text('Aucune donnée disponible');
                     }
                     final produits =
                         snapshot.data!.docs
@@ -152,7 +71,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 16,
-                        mainAxisExtent: 16,
+                        crossAxisSpacing: 16,
                       ),
                       itemBuilder: (context, index) {
                         return productsWidget(
@@ -193,8 +112,9 @@ Widget productsWidget({
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
                 image: NetworkImage(
-                  produc.produitUrl ??
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScUfdvt0l4tq5x51ysl8s0-QWdSzEdrgAxjg&s',
+                  produc.produitUrl!.isEmpty
+                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScUfdvt0l4tq5x51ysl8s0-QWdSzEdrgAxjg&s'
+                      : produc.produitUrl.toString(),
                 ),
                 fit: BoxFit.cover,
               ),
