@@ -1,7 +1,6 @@
 // providers/cart_provider.dart
 import 'dart:convert';
 
-
 import 'package:entert_projet_01/model/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,10 +16,15 @@ class CartProvider extends ChangeNotifier {
   void loadData() async {
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList('produits');
-    cartItems =
-        list!
-            .map((product) => ProductModel.fromMap(jsonDecode(product)))
-            .toList();
+
+    if (list == null) {
+      cartItems = [];
+    } else {
+      cartItems =
+          list
+              .map((product) => ProductModel.fromMap(jsonDecode(product)))
+              .toList();
+    }
   }
 
   Future<void> _saveDataInShared() async {
@@ -32,12 +36,23 @@ class CartProvider extends ChangeNotifier {
   }
 
   //add products to cart
-  void addInCart(String produitId, ProductModel prod) async {
-    if (cartItems.contains(prod) == false) {
+  void addInCart( ProductModel prod) async {
+    List<Map<String, dynamic>> cartMap =
+        cartItems.map((product) => product.toMap()).toList();
+    if (cartMap.contains(prod.toMap()) == false) {
       cartItems.add(prod);
     }
     await _saveDataInShared();
     notifyListeners();
+  }
+
+  // calcul price Total
+  double priceTotal() {
+    double s = 0.0;
+    for (ProductModel prod in cartItems) {
+      s = s + prod.price;
+    }
+    return s;
   }
 
   //remove products to cart

@@ -20,31 +20,82 @@ class _AddProductsState extends State<AddProducts> {
   final _productsDescriptionCtrl = TextEditingController();
   final _productsUrlCtrl = TextEditingController();
   //function for add products
-  void addProducts() async {
+  Future<void> addProducts() async {
     if (_form.currentState!.validate()) {
       final product = ProductModel(
         name: _productsNameCtrl.text,
-        price: double.parse(_productsPriceCtrl.text),
-        quality: _productsQualityCtrl.toString(),
+        price: double.tryParse(_productsPriceCtrl.text) ?? 0.0,
+        quality: _productsQualityCtrl ?? 'aucun',
         description: _productsDescriptionCtrl.text,
         produitUrl: _productsUrlCtrl.text,
       );
-      print('debut de la creation du document');
-      await _db.collection('Products').add(product.toMap());
-
-      print('nouveau document crée');
-      _form.currentState!.reset();
+      try {
+        await _db.collection('Products').add(product.toMap());
+         
+        _form.currentState!.reset();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Produit ajouté avec succès'),
+            duration: Duration(seconds: 800),
+          ),
+        );
+      } catch (e) {
+        print(e);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("erreur d'jout du document")));
+      }
     }
   }
 
   //end function add products
+
+  // formulaire pour le textEditing form du nom, du prix/description
+  Widget formulaire(TextEditingController ctrl, String type) => TextFormField(
+    controller: ctrl,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'ce champ ne peut pas être vide';
+      }
+      if (type == 'nom' && value.length < 3) {
+        return 'Le nom doit être 3 caractères ';
+      }
+      if (type == 'prix') {
+        final double? tryParse = double.tryParse(value);
+        if (tryParse == null || tryParse.isNegative) {
+          return 'entrez un prix corect';
+        }
+      }
+      return null;
+    },
+    keyboardType:
+        type == 'prix'
+            ? TextInputType.numberWithOptions(decimal: true)
+            : type == 'description'
+            ? TextInputType.multiline
+            : TextInputType.text,
+    decoration: InputDecoration(
+      constraints: BoxConstraints(),
+      filled: true,
+      fillColor: Colors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+
+        gapPadding: 8,
+      ),
+      hintText: "Entrez le $type du produit",
+      label: Text(type, style: style(12, 1)),
+    ),
+  );
+  // fin du formulaire
+
   @override
   void dispose() {
-    _productsDescriptionCtrl.text;
-    _productsNameCtrl.text;
-    _productsPriceCtrl.text;
-    _productsQualityCtrl;
-    _productsUrlCtrl.text;
+    _productsDescriptionCtrl.dispose();
+    _productsNameCtrl.dispose();
+    _productsPriceCtrl.dispose();
+
+    _productsUrlCtrl.dispose();
     super.dispose();
   }
 
@@ -152,10 +203,15 @@ class _AddProductsState extends State<AddProducts> {
                 SizedBox(height: 20),
                 TextButton(
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 100,
+                      vertical: 12,
+                    ),
                     backgroundColor: primaryColor,
                   ),
-                  onPressed: addProducts,
+                  onPressed: () async {
+                    await addProducts();
+                  },
 
                   child: Text(
                     'Add Product',
@@ -174,42 +230,3 @@ class _AddProductsState extends State<AddProducts> {
     );
   }
 }
-
-// formulaire pour le textEditing form du nom, du prix/description
-Widget formulaire(TextEditingController ctrl, String type) => TextFormField(
-  controller: ctrl,
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'ce champ ne peut pas être vide';
-    }
-    if (type == 'nom' && value.length < 3) {
-      return 'Le nom doit être 3 caractères ';
-    }
-    if (type == 'prix') {
-      final double? tryParse = double.tryParse(value);
-      if (tryParse!.isNegative || tryParse.isNaN) {
-        return 'entrez un prix corect';
-      }
-    }
-    return null;
-  },
-  keyboardType:
-      type == 'prix'
-          ? TextInputType.numberWithOptions(decimal: true)
-          : type == 'description'
-          ? TextInputType.multiline
-          : TextInputType.text,
-  decoration: InputDecoration(
-    constraints: BoxConstraints(),
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-
-      gapPadding: 8,
-    ),
-    hintText: "Entrez le $type du produit",
-    label: Text(type, style: style(12, 1)),
-  ),
-);
-// fin du formulaire

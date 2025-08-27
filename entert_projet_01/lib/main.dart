@@ -1,9 +1,10 @@
 // main.dart
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
-import 'package:entert_projet_01/pages/screens/add_products.dart';
+import 'package:entert_projet_01/pages/screens/cart_screens.dart';
 import 'package:entert_projet_01/pages/screens/home_page.dart';
-import 'package:entert_projet_01/pages/screens/products.dart';
+import 'package:entert_projet_01/pages/screens/products_screen.dart';
 import 'package:entert_projet_01/pages/screens/profile_page.dart';
+import 'package:entert_projet_01/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
@@ -18,7 +19,10 @@ Future<void> main() async {
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (m) => CartProvider()),
+      ],
       child: MyApp(),
     ),
   );
@@ -60,7 +64,7 @@ class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
     HomePage(),
     ProductsPage(),
-    AddProducts(),
+    CartScreens(),
     ProfilePage(),
   ];
 

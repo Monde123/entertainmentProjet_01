@@ -1,8 +1,11 @@
-// pages/screens/products.dart
+// pages/screens/products_screen.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
+import 'package:entert_projet_01/pages/screens/add_products.dart';
+import 'package:entert_projet_01/providers/cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -17,6 +20,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -75,6 +79,10 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                       itemBuilder: (context, index) {
                         return productsWidget(
+                          //add function to add card widget
+                          onPressed: () {
+                            cartItems.addInCart(produits[index]);
+                          },
                           height: 80,
                           produc: produits[index],
                         );
@@ -87,11 +95,28 @@ class _ProductsPageState extends State<ProductsPage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return AddProducts();
+              },
+            ),
+          );
+        },
+        backgroundColor: primaryColor,
+        shape: CircleBorder(eccentricity: 1),
+        elevation: 2,
+        child: Icon(Icons.add, color: Colors.white),
+      ),
     );
   }
 }
 
 Widget productsWidget({
+  GestureTapCallback? onPressed,
   GestureTapCallback? action,
   required double height,
   required ProductModel produc,
@@ -121,9 +146,12 @@ Widget productsWidget({
             ),
             child: Align(
               alignment: Alignment.topRight,
-              child: CircleAvatar(
-                backgroundColor: backgroundColor,
-                child: Icon(Icons.shopping_cart, color: primaryColor),
+              child: GestureDetector(
+                onTap: onPressed ?? () {},
+                child: CircleAvatar(
+                  backgroundColor: backgroundColor,
+                  child: Icon(Icons.shopping_cart, color: primaryColor),
+                ),
               ),
             ),
           ),
