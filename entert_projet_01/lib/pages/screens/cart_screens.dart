@@ -25,44 +25,47 @@ class _CartScreensState extends State<CartScreens> {
         actionsPadding: EdgeInsets.all(20),
         actions: [
           cartItems.isCart
-              ? ElevatedButton(
-                onPressed: cartItems.clear,
-
-                style: ElevatedButton.styleFrom(
+              ? GestureDetector(
+                onTap: cartItems.clear,
+                child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  shape: CircleBorder(),
+                  child: Icon(Icons.delete, color: Colors.red),
                 ),
-                child: Icon(Icons.delete, color: Colors.red),
               )
               : SizedBox(),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Expanded(
-              child: SizedBox(
-                child: GridView.builder(
-                  itemCount: cartItems.cartLenght,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                  ),
-                  itemBuilder: (context, index) {
-                    final ProductModel prod = cartItems.cartItems[index];
-                    return cartProductsWidget(
-                      onPressed: () => cartItems.removeInCart(prod),
-                      height: 100,
-                      produc: prod,
-                    );
-                  },
+      body:
+          !cartItems.isCart
+              ? Center(child: Text('Aucun produit dans le panier'))
+              : Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        child: GridView.builder(
+                          itemCount: cartItems.cartLenght,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16,
+                              ),
+                          itemBuilder: (context, index) {
+                            final ProductModel prod =
+                                cartItems.cartItems[index];
+                            return cartProductsWidget(
+                              onPressed: () => cartItems.removeInCart(prod),
+                              height: 100,
+                              produc: prod,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -100,15 +103,14 @@ Widget cartProductsWidget({
             ),
             child: Align(
               alignment: Alignment.topRight,
-              child: ElevatedButton(
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   onPressed!();
                 },
-                style: ElevatedButton.styleFrom(
+                child: CircleAvatar(
                   backgroundColor: backgroundColor,
-                  shape: OvalBorder(),
+                  child: Icon(Icons.delete, color: Colors.red),
                 ),
-                child: Icon(Icons.delete, color: Colors.red),
               ),
             ),
           ),

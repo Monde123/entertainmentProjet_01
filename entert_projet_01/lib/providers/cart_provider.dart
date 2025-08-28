@@ -10,6 +10,9 @@ class CartProvider extends ChangeNotifier {
   CartProvider() {
     loadData();
   }
+  bool isInCart(ProductModel p) => _cartProduitList(
+    cartItems,
+  ).contains(p.name + p.price.toString() + p.description.toString());
 
   int get cartLenght => cartItems.length;
 
@@ -36,15 +39,29 @@ class CartProvider extends ChangeNotifier {
   }
 
   //add products to cart
-  void addInCart( ProductModel prod) async {
-    List<Map<String, dynamic>> cartMap =
-        cartItems.map((product) => product.toMap()).toList();
-    if (cartMap.contains(prod.toMap()) == false) {
+  void addInCart(ProductModel prod) async {
+    List<String> products = _cartProduitList(cartItems);
+    final p = prod.name + prod.price.toString() + prod.description.toString();
+    if (products.contains(p) == false) {
       cartItems.add(prod);
     }
     await _saveDataInShared();
     notifyListeners();
   }
+
+  //fonction de hashage pensé pour la vérification de l'unicité d'un produit
+  List<String> _cartProduitList(List<ProductModel> cart) {
+    List<String> listProduit = [];
+    for (ProductModel product in cart) {
+      String p =
+          product.name +
+          product.price.toString() +
+          product.description.toString();
+      listProduit.add(p);
+    }
+    return listProduit;
+  }
+  // fin de la fonction de clé unique
 
   // calcul price Total
   double priceTotal() {

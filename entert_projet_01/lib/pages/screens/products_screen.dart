@@ -85,6 +85,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           },
                           height: 80,
                           produc: produits[index],
+                          isInCart: cartItems.isInCart(produits[index])
                         );
                       },
                     );
@@ -120,6 +121,7 @@ Widget productsWidget({
   GestureTapCallback? action,
   required double height,
   required ProductModel produc,
+  required bool isInCart,
 }) => GestureDetector(
   onTap: action,
   child: Container(
@@ -150,7 +152,16 @@ Widget productsWidget({
                 onTap: onPressed ?? () {},
                 child: CircleAvatar(
                   backgroundColor: backgroundColor,
-                  child: Icon(Icons.shopping_cart, color: primaryColor),
+                  child:
+                      isInCart
+                          ? Icon(
+                            Icons.shopping_cart,
+                            color: primaryColor,
+                          )
+                          : Icon(
+                            Icons.shopping_cart_outlined,
+                            color: primaryColor,
+                          ),
                 ),
               ),
             ),
