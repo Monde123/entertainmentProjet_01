@@ -12,17 +12,21 @@ class AddProducts extends StatefulWidget {
 }
 
 class _AddProductsState extends State<AddProducts> {
-  final _db = FirebaseFirestore.instance;
+  final _db = FirebaseFirestore.instance.collection('Products');
   final _form = GlobalKey<FormState>();
   final _productsNameCtrl = TextEditingController();
   final _productsPriceCtrl = TextEditingController();
   String? _productsQualityCtrl;
   final _productsDescriptionCtrl = TextEditingController();
   final _productsUrlCtrl = TextEditingController();
+
   //function for add products
   Future<void> addProducts() async {
     if (_form.currentState!.validate()) {
+      final docRef = _db.doc();
+      final docId = docRef.id;
       final product = ProductModel(
+        id: docId,
         name: _productsNameCtrl.text,
         price: double.tryParse(_productsPriceCtrl.text) ?? 0.0,
         quality: _productsQualityCtrl ?? 'aucun',
@@ -30,8 +34,8 @@ class _AddProductsState extends State<AddProducts> {
         produitUrl: _productsUrlCtrl.text,
       );
       try {
-        await _db.collection('Products').add(product.toMap());
-         
+        await docRef.set(product.toMap());
+
         _form.currentState!.reset();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

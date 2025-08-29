@@ -28,6 +28,7 @@ class CartProvider extends ChangeNotifier {
               .map((product) => ProductModel.fromMap(jsonDecode(product)))
               .toList();
     }
+    notifyListeners();
   }
 
   Future<void> _saveDataInShared() async {

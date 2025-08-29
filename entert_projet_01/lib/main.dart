@@ -2,9 +2,12 @@
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
 import 'package:entert_projet_01/pages/screens/cart_screens.dart';
 import 'package:entert_projet_01/pages/screens/home_page.dart';
+import 'package:entert_projet_01/pages/screens/other_cart_screens.dart';
+import 'package:entert_projet_01/pages/screens/other_products_screen.dart';
 import 'package:entert_projet_01/pages/screens/products_screen.dart';
 import 'package:entert_projet_01/pages/screens/profile_page.dart';
 import 'package:entert_projet_01/providers/cart_provider.dart';
+import 'package:entert_projet_01/providers/other_cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'providers/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
@@ -22,6 +25,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (m) => CartProvider()),
+        ChangeNotifierProvider(create: (m) => OtherCartProvider()),
       ],
       child: MyApp(),
     ),
@@ -63,8 +67,9 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
-    ProductsPage(),
-    CartScreens(),
+    ProductsPageCopy(),
+    OtherCartScreens(),
+
     ProfilePage(),
   ];
 
@@ -104,8 +109,8 @@ class _NavigationPageState extends State<NavigationPage> {
                 GButton(icon: FontAwesomeIcons.productHunt, text: 'Produits'),
 
                 GButton(
-                  icon: FontAwesomeIcons.solidCommentDots,
-                  text: 'Messa...',
+                  icon: FontAwesomeIcons.cartShopping,
+                  text: 'Panier',
                 ),
                 GButton(icon: FontAwesomeIcons.solidUser, text: 'Profi.'),
               ],
