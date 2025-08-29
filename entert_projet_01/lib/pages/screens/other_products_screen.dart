@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
 import 'package:entert_projet_01/pages/screens/add_products.dart';
+import 'package:entert_projet_01/pages/widgets/products_card.dart';
 
 import 'package:entert_projet_01/providers/other_cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
@@ -57,7 +58,7 @@ class _ProductsPageState extends State<ProductsPageCopy> {
                       return Center(
                         child: CircularProgressIndicator(
                           backgroundColor: primaryColor,
-                          strokeWidth: 20,
+                          strokeWidth: 2,
                         ),
                       );
                     }
@@ -79,8 +80,9 @@ class _ProductsPageState extends State<ProductsPageCopy> {
                       itemCount: produits.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 16,
+                        mainAxisSpacing: 20,
                         crossAxisSpacing: 16,
+                          childAspectRatio: 0.72,
                       ),
                       itemBuilder: (context, index) {
                         return productsWidget(
@@ -88,7 +90,7 @@ class _ProductsPageState extends State<ProductsPageCopy> {
                           onPressed: () {
                             cartItems.toggleInCart(produits[index].id);
                           },
-                          height: 80,
+                         
                           produc: produits[index],
                           isInCart: cartItems.isInCart(produits[index].id),
                         );
@@ -121,81 +123,3 @@ class _ProductsPageState extends State<ProductsPageCopy> {
   }
 }
 
-Widget productsWidget({
-  GestureTapCallback? onPressed,
-  GestureTapCallback? action,
-  required double height,
-  required ProductModel produc,
-  required bool isInCart,
-}) => GestureDetector(
-  onTap: action,
-  child: Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
-      color: Colors.white,
-    ),
-    child: Column(
-      children: [
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.all(10),
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                image: NetworkImage(
-                  produc.produitUrl!.isEmpty
-                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScUfdvt0l4tq5x51ysl8s0-QWdSzEdrgAxjg&s'
-                      : produc.produitUrl.toString(),
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-            
-            child: Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap:onPressed ,
-                child: CircleAvatar(
-                  backgroundColor: backgroundColor,
-                  child:
-                      isInCart
-                          ? Icon(Icons.shopping_cart, color: primaryColor)
-                          : Icon(
-                            Icons.shopping_cart_outlined,
-                            color: primaryColor,
-                          ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-        SizedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      produc.name,
-                      style: style(14, 2),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8),
-                    Text('\$ ${produc.price}', style: style(12, 1)),
-                  ],
-                ),
-              ),
-              Text(produc.quality),
-            ],
-          ),
-        ),
-      ],
-    ),
-  ),
-);

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class OtherCartProvider extends ChangeNotifier {
   List<String> _cartItems = [];
+ 
   List<String> get cartItems => List.unmodifiable(_cartItems);
 
   OtherCartProvider() {
@@ -19,6 +20,7 @@ class OtherCartProvider extends ChangeNotifier {
   bool isCart() {
     return _cartItems.isEmpty;
   }
+
 
   void toggleInCart(String p) {
     if (isInCart(p)) {
@@ -63,4 +65,5 @@ class OtherCartProvider extends ChangeNotifier {
     await _saveData(_cartItems);
     notifyListeners();
   }
+ 
 }

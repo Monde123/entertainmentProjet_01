@@ -35,12 +35,18 @@ class _AddProductsState extends State<AddProducts> {
       );
       try {
         await docRef.set(product.toMap());
-
+        _productsUrlCtrl.clear();
+        _productsNameCtrl.clear();
+        _productsDescriptionCtrl.clear();
+        _productsPriceCtrl.clear();
         _form.currentState!.reset();
+        setState(() {
+          _productsQualityCtrl = null;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Produit ajouté avec succès'),
-            duration: Duration(seconds: 800),
+            duration: Duration(seconds: 2),
           ),
         );
       } catch (e) {

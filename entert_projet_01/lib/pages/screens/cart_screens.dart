@@ -1,5 +1,6 @@
 // pages/screens/cart_screens.dart
 import 'package:entert_projet_01/model/product_model.dart';
+import 'package:entert_projet_01/pages/widgets/cart_products_card.dart';
 import 'package:entert_projet_01/providers/cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -43,23 +44,82 @@ class _CartScreensState extends State<CartScreens> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: SizedBox(
-                        child: GridView.builder(
-                          itemCount: cartItems.cartLenght,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 16,
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: cartItems.cartLenght,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 0.72,
+
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 20,
+                        ),
+                        itemBuilder: (context, index) {
+                          final ProductModel prod = cartItems.cartItems[index];
+                          return cartProductsWidget(
+                            onPressed: () => cartItems.removeInCart(prod),
+
+                            produc: prod,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+      bottomNavigationBar:
+          !cartItems.isCart
+              ? null
+              : Container(
+                height: 70,
+                margin: EdgeInsets.symmetric(horizontal: 20),
+
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 60),
+                    SizedBox(
+                      child: Align(
+                        child: Text(
+                          '${cartItems.priceTotal()}',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      '\$',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    SizedBox(width: 60),
+                    Expanded(
+                      child: Container(
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Icons.shopping_cart, color: primaryColor),
+                            SizedBox(width: 10),
+                            Text(
+                              'Payer',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
-                          itemBuilder: (context, index) {
-                            final ProductModel prod =
-                                cartItems.cartItems[index];
-                            return cartProductsWidget(
-                              onPressed: () => cartItems.removeInCart(prod),
-                              height: 100,
-                              produc: prod,
-                            );
-                          },
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -69,78 +129,3 @@ class _CartScreensState extends State<CartScreens> {
     );
   }
 }
-
-//widget for cart product
-
-Widget cartProductsWidget({
-  Function? onPressed,
-  GestureTapCallback? action,
-  required double height,
-  required ProductModel produc,
-}) => GestureDetector(
-  onTap: action,
-  child: Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(16),
-      color: Colors.white,
-    ),
-    child: Column(
-      children: [
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.all(10),
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                image: NetworkImage(
-                  produc.produitUrl!.isEmpty
-                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScUfdvt0l4tq5x51ysl8s0-QWdSzEdrgAxjg&s'
-                      : produc.produitUrl.toString(),
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  onPressed!();
-                },
-                child: CircleAvatar(
-                  backgroundColor: backgroundColor,
-                  child: Icon(Icons.delete, color: Colors.red),
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 20),
-        SizedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      produc.name,
-                      style: style(14, 2),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8),
-                    Text('\$ ${produc.price}', style: style(12, 1)),
-                  ],
-                ),
-              ),
-              Text(produc.quality),
-            ],
-          ),
-        ),
-      ],
-    ),
-  ),
-);

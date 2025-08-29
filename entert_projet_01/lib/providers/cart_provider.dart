@@ -6,24 +6,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<ProductModel> cartItems = [];
+  List<ProductModel> _cartItems = [];
+  List<ProductModel> get cartItems => List.unmodifiable(_cartItems);
+
   CartProvider() {
     loadData();
   }
-  bool isInCart(ProductModel p) => _cartProduitList(
-    cartItems,
-  ).contains(p.name + p.price.toString() + p.description.toString());
 
-  int get cartLenght => cartItems.length;
+  bool isInCart(ProductModel p) {
+    return _cartItems.any((prod) => prod.id == p.id);
+  }
+
+  int get cartLenght => _cartItems.length;
+
+  void toggleProduct(ProductModel prod) {
+    if (isInCart(prod)) {
+      removeInCart(prod);
+    } else {
+      addInCart(prod);
+    }
+  }
 
   void loadData() async {
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList('produits');
 
     if (list == null) {
-      cartItems = [];
+      _cartItems = [];
     } else {
-      cartItems =
+      _cartItems =
           list
               .map((product) => ProductModel.fromMap(jsonDecode(product)))
               .toList();
@@ -35,39 +46,25 @@ class CartProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(
       'produits',
-      cartItems.map((product) => jsonEncode(product.toMap())).toList(),
+      _cartItems.map((product) => jsonEncode(product.toMap())).toList(),
     );
   }
 
   //add products to cart
   void addInCart(ProductModel prod) async {
-    List<String> products = _cartProduitList(cartItems);
-    final p = prod.name + prod.price.toString() + prod.description.toString();
-    if (products.contains(p) == false) {
-      cartItems.add(prod);
+    if (isInCart(prod) == false) {
+       _cartItems.add(prod);
     }
     await _saveDataInShared();
     notifyListeners();
   }
 
-  //fonction de hashage pensé pour la vérification de l'unicité d'un produit
-  List<String> _cartProduitList(List<ProductModel> cart) {
-    List<String> listProduit = [];
-    for (ProductModel product in cart) {
-      String p =
-          product.name +
-          product.price.toString() +
-          product.description.toString();
-      listProduit.add(p);
-    }
-    return listProduit;
-  }
-  // fin de la fonction de clé unique
+
 
   // calcul price Total
   double priceTotal() {
     double s = 0.0;
-    for (ProductModel prod in cartItems) {
+    for (ProductModel prod in _cartItems) {
       s = s + prod.price;
     }
     return s;
@@ -75,13 +72,13 @@ class CartProvider extends ChangeNotifier {
 
   //remove products to cart
   void removeInCart(ProductModel prod) async {
-    cartItems.remove(prod);
+    _cartItems.removeWhere((pro)=>pro.id==prod.id);
     await _saveDataInShared();
     notifyListeners();
   }
 
   bool get isCart {
-    if (cartItems.isEmpty) {
+    if (_cartItems.isEmpty) {
       return false;
     } else {
       return true;
@@ -90,7 +87,7 @@ class CartProvider extends ChangeNotifier {
   //remove all products
 
   void clear() async {
-    cartItems.clear();
+    _cartItems.clear();
     await _saveDataInShared();
     notifyListeners();
   }
