@@ -49,6 +49,47 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  //reauthentification d'un user
+
+  Future<void> _reOauth({required email, required passWord}) async {
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: passWord,
+    );
+    final user = _auth.currentUser;
+    if (user == null) {
+      'aucun utilisateur connecté';
+    }
+
+    try {
+      await user!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      'erreur inattendue ${e.message}';
+    } catch (e) {
+      'Erreur innatendue';
+    }
+  } // fin de la réauthentification
+
+  Future<void> updateProfile({
+    required String name,
+    required String surName,
+  }) async {
+    final user = _auth.currentUser;
+    final db = FirebaseFirestore.instance.collection('Users').doc(user!.uid);
+    final displayName = '$name $surName';
+
+    try {
+      await user.updateDisplayName(displayName);
+      await db.update({'displayName': displayName});
+    } on FirebaseAuthException catch (e) {
+      _errorMessage = _mapFirebaseError(e);
+    } catch (e) {
+      _errorMessage = 'Erreur inattendue';
+    } finally {
+      notifyListeners();
+    }
+  }
+
   Future<void> signIn({
     required String mail,
     required String name,

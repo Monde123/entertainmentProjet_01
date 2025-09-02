@@ -1,5 +1,6 @@
 // pages/screens/profile_page.dart
 import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
+import 'package:entert_projet_01/pages/authScreens/update_user_infos.dart';
 import 'package:entert_projet_01/providers/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
@@ -15,16 +16,38 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  List<Map<String, dynamic>> buildInfo = [
-    {'icon': FontAwesomeIcons.userPen, 'buildName': 'Edit Profile'},
-    {'icon': Icons.notifications, 'buildName': 'Notifications'},
-    {'icon': Icons.settings, 'buildName': 'Settings'},
-    {'icon': Icons.lock, 'buildName': 'Change PassWord'},
-  ];
+  late List<Map<String, dynamic>> buildInfo;
+  @override
+  void initState() {
+    super.initState();
+   buildInfo = [
+      {
+        'icon': FontAwesomeIcons.userPen,
+        'buildName': 'Edit Profile',
+        'action': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return UpdateUserInfosScreens();
+              },
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.notifications,
+        'buildName': 'Notifications',
+        'action': () {},
+      },
+      {'icon': Icons.settings, 'buildName': 'Settings', 'action': () {}},
+      {'icon': Icons.lock, 'buildName': 'Change PassWord', 'action': () {}},
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-  
+    final userProvider = context.watch<UserProvider>();
 
     final user = userProvider.user;
     if (user == null) {
@@ -88,6 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     return buildProfileWidget(
                       buildInfo[indice]['icon'],
                       buildInfo[indice]['buildName'],
+                      buildInfo[indice]['action'] as VoidCallback,
                     );
                   },
                 ),
@@ -131,23 +155,28 @@ Widget buildProfileWidget(
   IconData icon,
   String buildName,
 
-  ///  CallbackAction? action,
-) => Container(
-  padding: EdgeInsets.all(7),
-  margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(20),
-  ),
-  child: ListTile(
-    leading: CircleAvatar(
-      backgroundColor: textColor,
-      child: Icon(icon, size: 24, color: Colors.white),
+  VoidCallback? action,
+) => GestureDetector(
+  onTap: () {
+    action!.call();
+  },
+  child: Container(
+    padding: EdgeInsets.all(7),
+    margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20),
     ),
-    title: Text(buildName, style: style(16, 2)),
-    trailing: CircleAvatar(
-      backgroundColor: backgroundColor,
-      child: Icon(Icons.arrow_right, size: 24, color: textColor),
+    child: ListTile(
+      leading: CircleAvatar(
+        backgroundColor: textColor,
+        child: Icon(icon, size: 24, color: Colors.white),
+      ),
+      title: Text(buildName, style: style(16, 2)),
+      trailing: CircleAvatar(
+        backgroundColor: backgroundColor,
+        child: Icon(Icons.arrow_right, size: 24, color: textColor),
+      ),
     ),
   ),
 );
