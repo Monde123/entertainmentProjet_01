@@ -33,7 +33,7 @@ class _CartScreensState extends State<CartScreens> {
               ? GestureDetector(
                 onTap: cartItems.clear,
                 child: CircleAvatar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: changeColor.cardColor,
                   child: Icon(Icons.delete, color: Colors.red),
                 ),
               )

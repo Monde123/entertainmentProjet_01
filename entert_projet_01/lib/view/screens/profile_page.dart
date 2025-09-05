@@ -81,11 +81,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       border: Border.all(
                         width: 6,
                         style: BorderStyle.solid,
-                        color: Colors.white,
+                        color: changeColor.cardColor,
                         strokeAlign: BorderSide.strokeAlignInside,
                       ),
                       shape: BoxShape.circle,
-                      color: Colors.white,
+                      color: changeColor.cardColor,
 
                       image: DecorationImage(
                         image: NetworkImage(faker.image.loremPicsum()),
@@ -142,12 +142,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Colors.white,
+                    backgroundColor: changeColor.cardColor,
                     child: Icon(Icons.logout, size: 24, color: Colors.red),
                   ),
                   title: Text(
                     'Log Out',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: changeColor.textColor, fontSize: 16),
                   ),
                 ),
               ),
@@ -176,13 +176,13 @@ Widget buildProfileWidget(
           padding: EdgeInsets.all(7),
           margin: EdgeInsets.only(left: 16, right: 16, top: 10),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: color.cardColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: color.textColor,
-              child: Icon(icon, size: 24, color: Colors.white),
+              child: Icon(icon, size: 24, color: color.cardColor),
             ),
             title: Text(buildName, style: style(16, 2, color.textColor)),
             trailing: CircleAvatar(

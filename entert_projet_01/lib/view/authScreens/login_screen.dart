@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     keyboardType: TextInputType.emailAddress,
     decoration: InputDecoration(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: ChangeColor().cardColor,
       
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<UserProvider>();
-      final changeColor = Provider.of<ChangeColor>(context);
+      final changeColor = Provider.of<ChangeColor>(context, listen: true);
     final primaryColor = changeColor.primaryColor;
     final textColor = changeColor.textColor;
     final backgroundColor = changeColor.background;

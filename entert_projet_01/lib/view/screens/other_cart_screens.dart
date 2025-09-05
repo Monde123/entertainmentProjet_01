@@ -45,7 +45,7 @@ class _OtherCartScreensState extends State<OtherCartScreens> {
               ? GestureDetector(
                 onTap: otherCartItems.clear,
                 child: CircleAvatar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: changeColor.cardColor,
                   child: Icon(Icons.delete, color: Colors.red),
                 ),
               )
@@ -144,21 +144,21 @@ class _OtherCartScreensState extends State<OtherCartScreens> {
                       child: Align(
                         child: Text(
                           '$totalPrice',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: changeColor.cardColor),
                         ),
                       ),
                     ),
                     SizedBox(width: 8),
                     Text(
                       '\$',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: changeColor.cardColor, fontSize: 16),
                     ),
                     SizedBox(width: 60),
                     Expanded(
                       child: Container(
                         height: 80,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: changeColor.cardColor,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(20),
                             bottomRight: Radius.circular(20),

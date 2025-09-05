@@ -86,7 +86,7 @@ class _AddProductsState extends State<AddProducts> {
         decoration: InputDecoration(
           constraints: BoxConstraints(),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: ChangeColor().cardColor,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
 
@@ -107,6 +107,10 @@ class _AddProductsState extends State<AddProducts> {
     final secondaryColor = changeColor.secodaryColor;
     return Scaffold(
       appBar: AppBar(
+             leading: IconButton(
+  icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+  onPressed: () => Navigator.pop(context),
+),
         backgroundColor: backgroundColor,
         title: Text('Add products', style: style(20, 4, textColor)),
         centerTitle: true,
@@ -220,7 +224,7 @@ class _AddProductsState extends State<AddProducts> {
                   child: Text(
                     'Add Product',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: changeColor.cardColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

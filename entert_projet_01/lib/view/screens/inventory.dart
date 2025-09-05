@@ -31,6 +31,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+             leading: IconButton(
+  icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+  onPressed: () => Navigator.pop(context),
+),
         backgroundColor: backgroundColor,
         actionsPadding: EdgeInsets.all(20),
         title: Text('Inventory', style: style(18, 2, textColor)),
@@ -48,7 +52,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
               );
             },
             child: CircleAvatar(
-              backgroundColor: Colors.white,
+              backgroundColor: changeColor.cardColor,
               child: Icon(FontAwesomeIcons.upRightFromSquare, size: 22),
             ),
           ),
@@ -107,7 +111,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         ),
                         margin: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: changeColor.cardColor,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
@@ -117,11 +121,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
                               child: Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: changeColor.textColor,
                                     child: Text(
                                       'ML',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: changeColor.cardColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                       ),
@@ -183,7 +187,7 @@ Widget banchInventory(int index) => ChangeNotifierProvider(
         padding: EdgeInsets.only(left: 20, right: 20),
         margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color.cardColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Align(

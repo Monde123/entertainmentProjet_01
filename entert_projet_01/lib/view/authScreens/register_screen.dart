@@ -134,7 +134,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
 
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: changeColor.cardColor,
                       prefixIcon: Icon(Icons.person),
                       prefixIconColor: primaryColor,
                       hintText: "Entrer votre prénom",
@@ -179,7 +179,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
 
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: changeColor.cardColor,
                       prefixIcon: Icon(Icons.mail),
                       prefixIconColor: primaryColor,
                       hintText: "Entrer votre email",
@@ -207,7 +207,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
 
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: changeColor.cardColor,
                       prefixIcon: Icon(Icons.password),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -247,7 +247,7 @@ class _SignInPageState extends State<SignInPage> {
                     obscureText: isObscure,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: changeColor.cardColor,
                       prefixIcon: Icon(Icons.password),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -297,7 +297,7 @@ class _SignInPageState extends State<SignInPage> {
                 onPressed: auth.isLoading ? null : () => _register(auth),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
-                  foregroundColor: Colors.white,
+                  foregroundColor: changeColor.cardColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

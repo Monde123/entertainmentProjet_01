@@ -24,13 +24,17 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+          onPressed: () => Navigator.pop(context),
+        ),
         actionsPadding: EdgeInsets.all(20),
         backgroundColor: backgroundColor,
         title: Text('Detail analytics', style: style(18, 2, textColor)),
         centerTitle: true,
         actions: [
           CircleAvatar(
-            backgroundColor: Colors.white,
+            backgroundColor: changeColor.cardColor,
             child: Icon(FontAwesomeIcons.upRightFromSquare, size: 24),
           ),
         ],
@@ -57,7 +61,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                   width: largeurEcran,
                   padding: EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: changeColor.cardColor,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       bottomLeft: Radius.circular(20),
@@ -79,7 +83,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                           backgroundColor: Colors.amber,
                           child: Icon(
                             FontAwesomeIcons.arrowRightArrowLeft,
-                            color: Colors.white,
+                            color: changeColor.cardColor,
                             size: 20,
                           ),
                         ),
@@ -100,7 +104,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                                     return LineTooltipItem(
                                       '\$${(barSpot.y * 10000).toStringAsFixed(0)}',
                                       TextStyle(
-                                        color: Colors.white,
+                                        color: changeColor.cardColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     );
@@ -198,7 +202,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
           return Container(
             height: 120,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: color.cardColor,
               borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -250,7 +254,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                         BarChartGroupData(
                           x: 0,
                           barRods: [
-                            BarChartRodData(toY: 1, color:color.primaryColor),
+                            BarChartRodData(toY: 1, color: color.primaryColor),
                           ],
                         ),
                         BarChartGroupData(

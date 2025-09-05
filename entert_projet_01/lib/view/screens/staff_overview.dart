@@ -39,13 +39,17 @@ class _StaffOverviewState extends State<StaffOverview> {
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     final changeColor = Provider.of<ChangeColor>(context);
-    final primaryColor = changeColor.primaryColor;
+    // final primaryColor = changeColor.primaryColor;
     final textColor = changeColor.textColor;
     final backgroundColor = changeColor.background;
 
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+          onPressed: () => Navigator.pop(context),
+        ),
         backgroundColor: backgroundColor,
         title: Text('Staff Overview', style: style(18, 2, textColor)),
         centerTitle: true,
@@ -76,13 +80,13 @@ class _StaffOverviewState extends State<StaffOverview> {
                     padding: EdgeInsets.only(left: 16, right: 16, bottom: 8),
                     margin: EdgeInsets.only(left: 20, right: 20, bottom: 12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: changeColor.cardColor,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 24,
-                        backgroundColor: Colors.white,
+                        backgroundColor: changeColor.cardColor,
                         foregroundImage: NetworkImage(users[index]['image']),
                       ),
                       title: Text(
@@ -119,7 +123,7 @@ Widget branchCard(int index) => ChangeNotifierProvider(
         //  margin: EdgeInsets.only(left: 24),
         height: 150,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ChangeColor().cardColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -131,7 +135,7 @@ Widget branchCard(int index) => ChangeNotifierProvider(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 16),
-                  Text('Branch ($index)', style: style(20, 3,color.textColor)),
+                  Text('Branch ($index)', style: style(20, 3, color.textColor)),
                   SizedBox(height: 10),
                   SizedBox(
                     child: Row(
@@ -147,9 +151,15 @@ Widget branchCard(int index) => ChangeNotifierProvider(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Brandon Agoua', style: style(16, 3, color.textColor)),
+                              Text(
+                                'Brandon Agoua',
+                                style: style(16, 3, color.textColor),
+                              ),
                               SizedBox(height: 4),
-                              Text('Head Office', style: style(12, 1, color.textColor)),
+                              Text(
+                                'Head Office',
+                                style: style(12, 1, color.textColor),
+                              ),
                             ],
                           ),
                         ),

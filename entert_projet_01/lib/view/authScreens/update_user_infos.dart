@@ -65,14 +65,22 @@ class _UpdateUserInfosScreensState extends State<UpdateUserInfosScreens> {
 
   @override
   Widget build(BuildContext context) {
-      final changeColor = Provider.of<ChangeColor>(context);
+    final changeColor = Provider.of<ChangeColor>(context);
     final primaryColor = changeColor.primaryColor;
     final backgroundColor = changeColor.background;
+    final textColor = changeColor.textColor;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text('Modifier les informations'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          'Modifier les informations',
+          style: style(20, 3, textColor),
+        ),
         centerTitle: true,
       ),
       body: Form(
@@ -85,23 +93,22 @@ class _UpdateUserInfosScreensState extends State<UpdateUserInfosScreens> {
               Text(
                 textAlign: TextAlign.center,
                 'Vous êtes sur le point de modifier vos informations de profile',
+                style: style(18, 2, textColor),
               ),
               SizedBox(height: 16),
               TextFormField(
+                style: style(14, 2, textColor),
                 controller: _nameCtrl,
 
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: changeColor.cardColor,
                   prefixIcon: Icon(Icons.person),
                   prefixIconColor: primaryColor,
-                  label: Text(
-                    'name',
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-                  ),
+                  label: Text('name', style: style(12, 2, textColor)),
 
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black12),
+                    borderSide: BorderSide(),
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -109,17 +116,15 @@ class _UpdateUserInfosScreensState extends State<UpdateUserInfosScreens> {
               ),
               SizedBox(height: 16),
               TextFormField(
+                style: style(14, 2, textColor),
                 controller: _surNameCtrl,
 
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: changeColor.cardColor,
                   prefixIcon: Icon(Icons.person),
                   prefixIconColor: primaryColor,
-                  label: Text(
-                    'surName',
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
-                  ),
+                  label: Text('surName', style: style(12, 2, textColor)),
 
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black12),
@@ -144,7 +149,7 @@ class _UpdateUserInfosScreensState extends State<UpdateUserInfosScreens> {
                   child: Text(
                     'Enregistrer',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

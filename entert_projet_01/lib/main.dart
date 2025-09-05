@@ -93,7 +93,7 @@ class _NavigationPageState extends State<NavigationPage> {
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20),
           ),
-          color: Colors.white,
+          color: changeColor.cardColor,
           boxShadow: [
             BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1)),
           ],
@@ -109,8 +109,8 @@ class _NavigationPageState extends State<NavigationPage> {
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
-              color:changeColor.secodaryColor ,
+              tabBackgroundColor: changeColor.background,
+              color:changeColor.primaryColor ,
               tabs: [
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
                 GButton(icon: FontAwesomeIcons.productHunt, text: 'Produits'),

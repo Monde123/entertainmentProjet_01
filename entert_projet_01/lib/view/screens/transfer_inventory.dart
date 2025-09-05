@@ -22,11 +22,18 @@ class _TransferInventoryState extends State<TransferInventory> {
     final changeColor = Provider.of<ChangeColor>(context);
 
     return Scaffold(
-      backgroundColor:changeColor.background,
+      backgroundColor: changeColor.background,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+          onPressed: () => Navigator.pop(context),
+        ),
         centerTitle: true,
         actionsPadding: EdgeInsets.all(20),
-        title: Text('Transfert Inventory', style: style(16, 2, changeColor.textColor)),
+        title: Text(
+          'Transfert Inventory',
+          style: style(16, 2, changeColor.textColor),
+        ),
         actions: [Icon(FontAwesomeIcons.circleH, color: changeColor.textColor)],
       ),
       body: SafeArea(
@@ -36,7 +43,7 @@ class _TransferInventoryState extends State<TransferInventory> {
               child: Container(
                 width: largeur,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: ChangeColor().cardColor,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
@@ -82,7 +89,7 @@ class _TransferInventoryState extends State<TransferInventory> {
                           ),
                           child: Icon(
                             Icons.check,
-                            color: Colors.white,
+                            color: changeColor.cardColor,
                             size: 24,
                           ),
                         ),
@@ -115,7 +122,7 @@ class _TransferInventoryState extends State<TransferInventory> {
                               alignment: Alignment.centerLeft,
                               child: CircleAvatar(
                                 radius: 30,
-                                backgroundColor: Colors.white,
+                                backgroundColor: changeColor.cardColor,
                                 child: Icon(
                                   FontAwesomeIcons.heart,
                                   //color: primaryColor,
@@ -125,7 +132,10 @@ class _TransferInventoryState extends State<TransferInventory> {
                             ),
                           ),
                           SizedBox(width: 8),
-                          Text('125%', style: style(12, 2, changeColor.textColor)),
+                          Text(
+                            '125%',
+                            style: style(12, 2, changeColor.textColor),
+                          ),
                         ],
                       ),
                     ),
@@ -148,9 +158,15 @@ class _TransferInventoryState extends State<TransferInventory> {
                 },
                 title: Text(
                   'Staff Inventory',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(
+                    color: ChangeColor().cardColor,
+                    fontSize: 14,
+                  ),
                 ),
-                trailing: Icon(Icons.arrow_right_alt, color: Colors.white),
+                trailing: Icon(
+                  Icons.arrow_right_alt,
+                  color: ChangeColor().cardColor,
+                ),
               ),
             ),
           ],

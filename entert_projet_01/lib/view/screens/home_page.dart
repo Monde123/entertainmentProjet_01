@@ -20,14 +20,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-      final changeColor = Provider.of<ChangeColor>(context);
+    final changeColor = Provider.of<ChangeColor>(context, listen: false);
     final primaryColor = changeColor.primaryColor;
     final textColor = changeColor.textColor;
     final backgroundColor = changeColor.background;
+    final cardColor = changeColor.cardColor;
 
     final user = userProvider.user;
 
-    String userName= user ==null ? 'John Doe': user.displayName;
+    String userName = user == null ? 'John Doe' : user.displayName;
 
     List<Icon> iconData = [
       Icon(FontAwesomeIcons.shirt, color: primaryColor, size: 28),
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 5),
               Text(
-               userName,
+                userName,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -93,9 +94,9 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     padding: EdgeInsets.all(16),
                     width: largeurEcran - 40,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    decoration: BoxDecoration(
+                      color: cardColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
                     ),
                     child: Column(
                       children: [
@@ -158,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                                     color: primaryColor,
                                   ),
                                 ),
-                                progressColor: Colors.blue,
+                                progressColor: primaryColor,
                                 backgroundColor: Colors.grey[200]!,
                                 circularStrokeCap: CircularStrokeCap.round,
                               ),
@@ -180,11 +181,11 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     },
-                    title: const Text(
+                    title: Text(
                       'View more information',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: cardColor, fontSize: 12),
                     ),
-                    trailing: const Icon(Icons.add_circle, color: Colors.white),
+                    trailing: Icon(Icons.add_circle, color: cardColor),
                   ),
                 ],
               ),
@@ -228,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                         // height: ,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
+                          color: cardColor,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,

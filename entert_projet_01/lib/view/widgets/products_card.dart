@@ -19,7 +19,7 @@ Widget productsWidget({
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: Colors.white,
+            color:color.cardColor,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

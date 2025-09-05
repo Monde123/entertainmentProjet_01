@@ -33,7 +33,7 @@ class _ProductsPageState extends State<ProductsPage> {
         centerTitle: true,
         actions: [
           CircleAvatar(
-            backgroundColor: Colors.white,
+            backgroundColor: changeColor.cardColor,
             child: Icon(Icons.search, color: primaryColor, size: 28),
           ),
         ],
@@ -100,7 +100,7 @@ class _ProductsPageState extends State<ProductsPage> {
         backgroundColor: primaryColor,
         shape: CircleBorder(eccentricity: 1),
         elevation: 2,
-        child: Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: changeColor.cardColor),
       ),
     );
   }
