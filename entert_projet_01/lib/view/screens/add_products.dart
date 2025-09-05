@@ -1,6 +1,6 @@
 // view/screens/add_products.dart
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:entert_projet_01/model/product_model.dart';
+
+import 'package:entert_projet_01/repository/product_repository.dart';
 import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,6 @@ class AddProducts extends StatefulWidget {
 }
 
 class _AddProductsState extends State<AddProducts> {
-  final _db = FirebaseFirestore.instance.collection('Products');
   final _form = GlobalKey<FormState>();
   final _productsNameCtrl = TextEditingController();
   final _productsPriceCtrl = TextEditingController();
@@ -24,19 +23,20 @@ class _AddProductsState extends State<AddProducts> {
   //function for add products
   Future<void> addProducts() async {
     if (_form.currentState!.validate()) {
-      final docRef = _db.doc();
-      final docId = docRef.id;
-      final product = ProductModel(
-        id: docId,
-        name: _productsNameCtrl.text,
-        price: double.tryParse(_productsPriceCtrl.text) ?? 0.0,
-        quality: _productsQualityCtrl ?? 'aucun',
-        description: _productsDescriptionCtrl.text,
-        produitUrl: _productsUrlCtrl.text,
-      );
-      try {
-        await docRef.set(product.toMap());
+      final double price = double.tryParse(_productsPriceCtrl.text) ?? 0.0;
+      final String quality = _productsQualityCtrl ?? 'aucun';
+      final String description = _productsDescriptionCtrl.text;
+      final String produitUrl = _productsUrlCtrl.text;
+      ProductRepository product = ProductRepository();
 
+      try {
+        await product.addProduit(
+          _productsNameCtrl.text,
+          produitUrl,
+          price,
+          description,
+          quality,
+        );
         setState(() {
           _form.currentState!.reset();
           _productsQualityCtrl = null;
@@ -107,10 +107,10 @@ class _AddProductsState extends State<AddProducts> {
     final secondaryColor = changeColor.secodaryColor;
     return Scaffold(
       appBar: AppBar(
-             leading: IconButton(
-  icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
-  onPressed: () => Navigator.pop(context),
-),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: changeColor.iconColor),
+          onPressed: () => Navigator.pop(context),
+        ),
         backgroundColor: backgroundColor,
         title: Text('Add products', style: style(20, 4, textColor)),
         centerTitle: true,

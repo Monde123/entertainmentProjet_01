@@ -16,7 +16,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   late List<Map<String, dynamic>> buildInfo;
   @override
   void initState() {
@@ -49,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = context.read<UserProvider>();
-      final changeColor = Provider.of<ChangeColor>(context);
+    final changeColor = Provider.of<ChangeColor>(context);
     final textColor = changeColor.textColor;
     final backgroundColor = changeColor.background;
 
@@ -61,9 +60,28 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: backgroundColor,
 
       appBar: AppBar(
+    
         backgroundColor: backgroundColor,
         title: Text('Profile', style: style(24, 3, textColor)),
         centerTitle: true,
+        actionsPadding: EdgeInsets.only(right: 20),
+        actions: [
+          Consumer<ChangeColor>(
+            builder: (context, theme, child) {
+              return IconButton(
+              
+                icon: Icon(
+                  theme.isDark ? Icons.dark_mode : Icons.light_mode,
+                  color: theme.textColor,
+                  size: 28,
+                ),
+                onPressed: () {
+                  theme.toggleTheme();
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -104,7 +122,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: 12),
                   Consumer<UserProvider>(
                     builder: (context, user, child) {
-                      return Text(user.user!.displayName, style: style(20, 3, textColor));
+                      return Text(
+                        user.user!.displayName,
+                        style: style(20, 3, textColor),
+                      );
                     },
                   ),
                 ],
@@ -147,7 +168,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   title: Text(
                     'Log Out',
-                    style: TextStyle(color: changeColor.textColor, fontSize: 16),
+                    style: TextStyle(
+                      color: changeColor.textColor,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),

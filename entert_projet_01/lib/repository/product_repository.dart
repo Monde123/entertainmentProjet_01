@@ -1,11 +1,14 @@
 // repository/product_repository.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
+import 'package:entert_projet_01/repository/auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProductRepository {
   ProductModel? _productModel;
   ProductModel? get productModel => _productModel;
   final _db = FirebaseFirestore.instance.collection('Products');
+  final _auth=  FirebaseAuth.instance;
 
   Future<void> addProduit(
     String name,
@@ -23,6 +26,7 @@ class ProductRepository {
         price: price,
         quality: quality,
         description: description,
+        vendorId: _auth.currentUser!.uid,
       );
       await docs.set(_productModel!.toMap());
     } on FirebaseException {
