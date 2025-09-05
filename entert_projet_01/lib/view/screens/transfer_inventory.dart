@@ -1,9 +1,11 @@
 // view/screens/transfer_inventory.dart
 import 'package:entert_projet_01/view/screens/staff_overview.dart';
 import 'package:entert_projet_01/utils/colors.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class TransferInventory extends StatefulWidget {
   const TransferInventory({super.key, required this.index});
@@ -18,14 +20,15 @@ class _TransferInventoryState extends State<TransferInventory> {
   Widget build(BuildContext context) {
     double largeur = MediaQuery.of(context).size.width;
     double hauteur = MediaQuery.of(context).size.height;
+    final changeColor = Provider.of<ChangeColor>(context);
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor:changeColor.background,
       appBar: AppBar(
         centerTitle: true,
         actionsPadding: EdgeInsets.all(20),
         title: Text('Transfert Inventory', style: style(16, 2)),
-        actions: [Icon(FontAwesomeIcons.circleH, color: textColor)],
+        actions: [Icon(FontAwesomeIcons.circleH, color: changeColor.textColor)],
       ),
       body: SafeArea(
         child: Column(

@@ -1,15 +1,22 @@
-// pages/widgets/cart_products_card.dart
+// view/widgets/cart_products_card.dart
 //widget for cart product
 import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/utils/colors.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Widget cartProductsWidget({
   Function? onPressed,
   GestureTapCallback? action,
 
   required ProductModel produc,
-}) => GestureDetector(
+}) => 
+ ChangeNotifierProvider(
+  create: (_) => ChangeColor(),
+  child: Consumer<ChangeColor>(
+    builder: (context, color, _) {
+      return
+GestureDetector(
   onTap: action,
   child: Container(
     decoration: BoxDecoration(
@@ -42,7 +49,7 @@ Widget cartProductsWidget({
                   onPressed!();
                 },
                 child: CircleAvatar(
-                  backgroundColor: backgroundColor,
+                  backgroundColor: color.background,
                   child: Icon(Icons.delete, color: Colors.red),
                 ),
               ),
@@ -60,12 +67,12 @@ Widget cartProductsWidget({
             children: [
               Text(
                 produc.name,
-                style: style(14, 2),
+                style: style(14, 2, color.textColor),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 8),
-              Text('\$ ${produc.price}', style: style(12, 1)),
+              Text('\$ ${produc.price}', style: style(12, 1, color.textColor)),
               Text(produc.quality),
             ],
           ),
@@ -74,3 +81,4 @@ Widget cartProductsWidget({
     ),
   ),
 );
+    }));

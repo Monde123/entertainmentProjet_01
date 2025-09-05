@@ -1,12 +1,10 @@
 // view/screens/products_screen.dart
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/repository/product_repository.dart';
 import 'package:entert_projet_01/view/screens/add_products.dart';
 import 'package:entert_projet_01/view/widgets/products_card.dart';
 import 'package:entert_projet_01/viewModel/cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
+import 'package:entert_projet_01/viewModel/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +19,7 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     final cartItems = Provider.of<CartProvider>(context, listen: true);
-     ProductRepository ? prod;
+    final produits = Provider.of<ProductProvider>(context, listen: true);
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -43,36 +41,21 @@ class _ProductsPageState extends State<ProductsPage> {
           children: [
             SizedBox(height: 20),
             Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: prod!.allProducts(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Erreur de chargement');
+              child: Builder(
+                builder: (_) {
+                  if (produits.loading) {
+                    return Center(child: CircularProgressIndicator());
                   }
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: primaryColor,
-                        strokeWidth: 2,
-                      ),
-                    );
+                  if (produits.error != null) {
+                    return Center(child: Text(produits.error.toString()));
                   }
-                  if (snapshot.data!.docs.isEmpty) {
-                    return Text('Aucune donnée disponible');
+                  if (produits.listProduits.isEmpty) {
+                    return Center(child: Text('Aucune données disponibles'));
                   }
-                  final produits =
-                      snapshot.data!.docs
-                          .map(
-                            (doc) => ProductModel.fromMap(
-                              doc.data() as Map<String, dynamic>,
-                            ),
-                          )
-                          .toList();
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: produits.length,
+                    itemCount: produits.listProduits.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 0.72,
                       crossAxisCount: 2,
@@ -83,11 +66,13 @@ class _ProductsPageState extends State<ProductsPage> {
                       return productsWidget(
                         //add function to add card widget
                         onPressed: () {
-                          cartItems.toggleProduct(produits[index]);
+                          cartItems.toggleProduct(produits.listProduits[index]);
                         },
 
-                        produc: produits[index],
-                        isInCart: cartItems.isInCart(produits[index]),
+                        produc: produits.listProduits[index],
+                        isInCart: cartItems.isInCart(
+                          produits.listProduits[index],
+                        ),
                       );
                     },
                   );

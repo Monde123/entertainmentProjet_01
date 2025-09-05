@@ -32,9 +32,11 @@ class ProductRepository {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> allProducts() {
-     Stream<QuerySnapshot<Map<String, dynamic>>> firebase =
+  Stream<List<ProductModel>> allProducts() {
+    Stream<QuerySnapshot<Map<String, dynamic>>> firebase =
         FirebaseFirestore.instance.collection('Products').snapshots();
-    return firebase;
+    return firebase.map((snap) {
+      return snap.docs.map((doc) => ProductModel.fromMap(doc.data())).toList();
+    });
   }
 }
