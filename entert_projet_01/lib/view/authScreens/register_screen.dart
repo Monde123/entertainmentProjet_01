@@ -1,7 +1,7 @@
-// pages/authScreens/register_screen.dart
+// view/authScreens/register_screen.dart
 
-import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
-import 'package:entert_projet_01/providers/user_provider.dart';
+import 'package:entert_projet_01/view/authScreens/login_screen.dart';
+import 'package:entert_projet_01/viewModel/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +27,7 @@ class _SignInPageState extends State<SignInPage> {
   void _register(UserProvider auth) async {
     if (!_formKey.currentState!.validate()) return;
 
-    await auth.signIn(
+    await auth.signUp(
       mail: _emailController.text.trim(),
       passWord: _mdpController.text.trim(),
       name: _nameController.text.trim(),
@@ -67,27 +67,26 @@ class _SignInPageState extends State<SignInPage> {
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: backgroundColor,
-      ),
+      appBar: AppBar(backgroundColor: backgroundColor),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-          Align(
-            alignment: Alignment.center,
-            child:   Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Inscription', style: style(20, 3)),
-                SizedBox(height: 12),
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Inscription', style: style(20, 3)),
+                  SizedBox(height: 12),
 
-                Text(
-                  "Remplissez vos informations ci-dessous",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),),
+                  Text(
+                    "Remplissez vos informations ci-dessous",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 20),
             Form(
               key: _formKey,
@@ -100,7 +99,13 @@ class _SignInPageState extends State<SignInPage> {
                       fillColor: Colors.white,
                       prefixIcon: Icon(Icons.person),
                       prefixIconColor: primaryColor,
-                      label: Text('name', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+                      label: Text(
+                        'name',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        ),
+                      ),
 
                       hintText: "Entrer votre nom",
                       border: OutlineInputBorder(
@@ -116,7 +121,13 @@ class _SignInPageState extends State<SignInPage> {
                   TextFormField(
                     controller: _surnameController,
                     decoration: InputDecoration(
-                      label: Text('firstName', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+                      label: Text(
+                        'firstName',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        ),
+                      ),
 
                       filled: true,
                       fillColor: Colors.white,
@@ -155,7 +166,13 @@ class _SignInPageState extends State<SignInPage> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      label: Text('mail', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+                      label: Text(
+                        'mail',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        ),
+                      ),
 
                       filled: true,
                       fillColor: Colors.white,
@@ -177,7 +194,13 @@ class _SignInPageState extends State<SignInPage> {
                     obscureText: isObscure,
 
                     decoration: InputDecoration(
-                      label: Text('passWord', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+                      label: Text(
+                        'passWord',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        ),
+                      ),
 
                       filled: true,
                       fillColor: Colors.white,
@@ -233,7 +256,13 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ),
                       prefixIconColor: primaryColor,
-                      label: Text('passWord', style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12),),
+                      label: Text(
+                        'passWord',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        ),
+                      ),
                       suffixIconColor: primaryColor,
                       hintText: "Confirmez votre mot de passe",
                       border: OutlineInputBorder(

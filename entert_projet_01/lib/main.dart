@@ -1,15 +1,15 @@
 // main.dart
-import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
-import 'package:entert_projet_01/pages/screens/cart_screens.dart';
-import 'package:entert_projet_01/pages/screens/home_page.dart';
-import 'package:entert_projet_01/pages/screens/other_cart_screens.dart';
-import 'package:entert_projet_01/pages/screens/other_products_screen.dart';
-import 'package:entert_projet_01/pages/screens/products_screen.dart';
-import 'package:entert_projet_01/pages/screens/profile_page.dart';
-import 'package:entert_projet_01/providers/cart_provider.dart';
-import 'package:entert_projet_01/providers/other_cart_provider.dart';
+import 'package:entert_projet_01/view/authScreens/login_screen.dart';
+import 'package:entert_projet_01/view/screens/cart_screens.dart';
+import 'package:entert_projet_01/view/screens/home_page.dart';
+import 'package:entert_projet_01/view/screens/other_cart_screens.dart';
+import 'package:entert_projet_01/view/screens/other_products_screen.dart';
+import 'package:entert_projet_01/view/screens/products_screen.dart';
+import 'package:entert_projet_01/view/screens/profile_page.dart';
+import 'package:entert_projet_01/viewModel/cart_provider.dart';
+import 'package:entert_projet_01/viewModel/other_cart_provider.dart';
 import 'package:provider/provider.dart';
-import 'providers/user_provider.dart';
+import 'viewModel/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +67,8 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
-    ProductsPageCopy(),
-    OtherCartScreens(),
+    ProductsPage(),
+    CartScreens(),
 
     ProfilePage(),
   ];

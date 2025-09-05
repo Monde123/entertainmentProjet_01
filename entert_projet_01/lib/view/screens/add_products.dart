@@ -1,8 +1,9 @@
-// pages/screens/add_products.dart
+// view/screens/add_products.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
+
 
 class AddProducts extends StatefulWidget {
   const AddProducts({super.key});
@@ -35,12 +36,10 @@ class _AddProductsState extends State<AddProducts> {
       );
       try {
         await docRef.set(product.toMap());
-        _productsUrlCtrl.clear();
-        _productsNameCtrl.clear();
-        _productsDescriptionCtrl.clear();
-        _productsPriceCtrl.clear();
-        _form.currentState!.reset();
+       
+   
         setState(() {
+           _form.currentState!.reset();
           _productsQualityCtrl = null;
         });
         ScaffoldMessenger.of(context).showSnackBar(
@@ -100,16 +99,6 @@ class _AddProductsState extends State<AddProducts> {
   // fin du formulaire
 
   @override
-  void dispose() {
-    _productsDescriptionCtrl.dispose();
-    _productsNameCtrl.dispose();
-    _productsPriceCtrl.dispose();
-
-    _productsUrlCtrl.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -154,14 +143,14 @@ class _AddProductsState extends State<AddProducts> {
                       SizedBox(height: 5),
                       TextFormField(
                         controller: _productsUrlCtrl,
-                        validator: (value) {
+
+                        /* validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'ce champ ne peut pas être vide';
                           }
 
                           return null;
-                        },
-
+                        },*/
                         decoration: InputDecoration(
                           border: UnderlineInputBorder(
                             borderSide: BorderSide.none,

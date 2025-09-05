@@ -1,5 +1,5 @@
-// pages/screens/transfer_inventory.dart
-import 'package:entert_projet_01/pages/screens/staff_overview.dart';
+// view/screens/transfer_inventory.dart
+import 'package:entert_projet_01/view/screens/staff_overview.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';

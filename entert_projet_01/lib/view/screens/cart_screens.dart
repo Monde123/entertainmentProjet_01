@@ -1,7 +1,7 @@
-// pages/screens/cart_screens.dart
+// view/screens/cart_screens.dart
 import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/pages/widgets/cart_products_card.dart';
-import 'package:entert_projet_01/providers/cart_provider.dart';
+import 'package:entert_projet_01/view/widgets/cart_products_card.dart';
+import 'package:entert_projet_01/viewModel/cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

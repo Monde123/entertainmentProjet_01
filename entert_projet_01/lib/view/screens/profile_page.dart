@@ -1,7 +1,7 @@
-// pages/screens/profile_page.dart
-import 'package:entert_projet_01/pages/authScreens/login_screen.dart';
-import 'package:entert_projet_01/pages/authScreens/update_user_infos.dart';
-import 'package:entert_projet_01/providers/user_provider.dart';
+// view/screens/profile_page.dart
+import 'package:entert_projet_01/view/authScreens/login_screen.dart';
+import 'package:entert_projet_01/view/authScreens/update_user_infos.dart';
+import 'package:entert_projet_01/viewModel/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-   buildInfo = [
+    buildInfo = [
       {
         'icon': FontAwesomeIcons.userPen,
         'buildName': 'Edit Profile',
@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = context.watch<UserProvider>();
+    final userProvider = context.read<UserProvider>();
 
     final user = userProvider.user;
     if (user == null) {
@@ -75,14 +75,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 120,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        width: 5,
+                        width: 6,
                         style: BorderStyle.solid,
-                        color: Colors.green,
+                        color: Colors.white,
                         strokeAlign: BorderSide.strokeAlignInside,
                       ),
                       shape: BoxShape.circle,
                       color: Colors.white,
-                      // backgroundBlendMode: BlendMode.color,
+
                       image: DecorationImage(
                         image: NetworkImage(faker.image.loremPicsum()),
                         fit: BoxFit.cover,
@@ -98,7 +98,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   SizedBox(height: 12),
-                  Text(user.displayName, style: style(18, 3)),
+                  Consumer<UserProvider>(
+                    builder: (context, user, child) {
+                      return Text(user.user!.displayName, style: style(20, 3));
+                    },
+                    
+                  ),
                 ],
               ),
             ),

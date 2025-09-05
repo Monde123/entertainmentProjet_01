@@ -1,28 +1,31 @@
-// pages/screens/products_screen.dart
+// view/screens/other_products_screen.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/pages/screens/add_products.dart';
-import 'package:entert_projet_01/pages/widgets/products_card.dart';
-import 'package:entert_projet_01/providers/cart_provider.dart';
+import 'package:entert_projet_01/view/screens/add_products.dart';
+import 'package:entert_projet_01/view/widgets/products_card.dart';
+
+import 'package:entert_projet_01/viewModel/other_cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProductsPage extends StatefulWidget {
-  const ProductsPage({super.key});
+class ProductsPageCopy extends StatefulWidget {
+  const ProductsPageCopy({super.key});
 
   @override
-  State<ProductsPage> createState() => _ProductsPageState();
+  State<ProductsPageCopy> createState() => _ProductsPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
+class _ProductsPageState extends State<ProductsPageCopy> {
   final Stream<QuerySnapshot<Map<String, dynamic>>> _firebase =
       FirebaseFirestore.instance.collection('Products').snapshots();
 
   @override
   Widget build(BuildContext context) {
-    final cartItems = Provider.of<CartProvider>(context, listen: true);
-  
+    final cartItems = Provider.of<OtherCartProvider>(context);
+   
+
+   
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -43,7 +46,7 @@ class _ProductsPageState extends State<ProductsPage> {
           children: [
             SizedBox(height: 20),
             Expanded(
-              
+              child: SizedBox(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _firebase,
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -62,6 +65,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     if (snapshot.data!.docs.isEmpty) {
                       return Text('Aucune donnée disponible');
                     }
+       
                     final produits =
                         snapshot.data!.docs
                             .map(
@@ -70,32 +74,31 @@ class _ProductsPageState extends State<ProductsPage> {
                               ),
                             )
                             .toList();
-                    return  GridView.builder(
-                        shrinkWrap: true,
-                       physics: const NeverScrollableScrollPhysics(),
-                        itemCount: produits.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    return GridView.builder(
+                      shrinkWrap: true,
+                     // physics: const NeverScrollableScrollPhysics(),
+                      itemCount: produits.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 16,
                           childAspectRatio: 0.72,
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 20,
-                          crossAxisSpacing: 16,
-                        ),
-                        itemBuilder: (context, index) {
-                          return productsWidget(
-                            //add function to add card widget
-                            onPressed: () {
-                              cartItems.toggleProduct(produits[index]);
-                            },
-                        
-                            produc: produits[index],
-                            isInCart: cartItems.isInCart(produits[index]),
-                          );
-                        },
-                      
+                      ),
+                      itemBuilder: (context, index) {
+                        return productsWidget(
+                          //add function to add card widget
+                          onPressed: () {
+                            cartItems.toggleInCart(produits[index].id);
+                          },
+                         
+                          produc: produits[index],
+                          isInCart: cartItems.isInCart(produits[index].id),
+                        );
+                      },
                     );
                   },
                 ),
-              
+              ),
             ),
           ],
         ),
@@ -119,3 +122,4 @@ class _ProductsPageState extends State<ProductsPage> {
     );
   }
 }
+

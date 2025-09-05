@@ -1,7 +1,7 @@
-// pages/authScreens/login_screen.dart
+// view/authScreens/login_screen.dart
 import 'package:entert_projet_01/main.dart';
-import 'package:entert_projet_01/pages/authScreens/register_screen.dart';
-import 'package:entert_projet_01/providers/user_provider.dart';
+import 'package:entert_projet_01/view/authScreens/register_screen.dart';
+import 'package:entert_projet_01/viewModel/user_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

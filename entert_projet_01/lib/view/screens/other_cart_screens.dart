@@ -1,8 +1,8 @@
-// pages/screens/other_cart_screens.dart
+// view/screens/other_cart_screens.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/pages/widgets/cart_products_card.dart';
-import 'package:entert_projet_01/providers/other_cart_provider.dart';
+import 'package:entert_projet_01/view/widgets/cart_products_card.dart';
+import 'package:entert_projet_01/viewModel/other_cart_provider.dart';
 import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
