@@ -3,8 +3,8 @@
 import 'package:entert_projet_01/view/screens/add_products.dart';
 import 'package:entert_projet_01/view/widgets/products_card.dart';
 import 'package:entert_projet_01/viewModel/cart_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:entert_projet_01/viewModel/product_provider.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +20,16 @@ class _ProductsPageState extends State<ProductsPage> {
   Widget build(BuildContext context) {
     final cartItems = Provider.of<CartProvider>(context, listen: true);
     final produits = Provider.of<ProductProvider>(context, listen: true);
+      final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
 
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text('Products', style: style(20, 3)),
+        title: Text('Products', style: style(20, 3, textColor)),
         centerTitle: true,
         actions: [
           CircleAvatar(

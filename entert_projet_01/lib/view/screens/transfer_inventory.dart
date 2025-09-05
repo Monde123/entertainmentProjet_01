@@ -1,6 +1,5 @@
 // view/screens/transfer_inventory.dart
 import 'package:entert_projet_01/view/screens/staff_overview.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class _TransferInventoryState extends State<TransferInventory> {
       appBar: AppBar(
         centerTitle: true,
         actionsPadding: EdgeInsets.all(20),
-        title: Text('Transfert Inventory', style: style(16, 2)),
+        title: Text('Transfert Inventory', style: style(16, 2, changeColor.textColor)),
         actions: [Icon(FontAwesomeIcons.circleH, color: changeColor.textColor)],
       ),
       body: SafeArea(
@@ -61,16 +60,16 @@ class _TransferInventoryState extends State<TransferInventory> {
                       child: ListTile(
                         title: Text(
                           'Branch(${widget.index})',
-                          style: style(20, 3),
+                          style: style(20, 3, changeColor.textColor),
                         ),
                         subtitle: Text(
                           faker.address.city(),
-                          style: style(12, 1),
+                          style: style(12, 1, changeColor.textColor),
                         ),
                         trailing: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: changeColor.primaryColor,
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
@@ -94,7 +93,7 @@ class _TransferInventoryState extends State<TransferInventory> {
                       width: largeur,
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       decoration: BoxDecoration(
-                        color: backgroundColor,
+                        color: changeColor.background,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -110,7 +109,7 @@ class _TransferInventoryState extends State<TransferInventory> {
                                 topLeft: Radius.circular(12),
                                 bottomLeft: Radius.circular(12),
                               ),
-                              color: secondaryColor,
+                              color: changeColor.secodaryColor,
                             ),
                             child: Align(
                               alignment: Alignment.centerLeft,
@@ -126,7 +125,7 @@ class _TransferInventoryState extends State<TransferInventory> {
                             ),
                           ),
                           SizedBox(width: 8),
-                          Text('125%', style: style(12, 2)),
+                          Text('125%', style: style(12, 2, changeColor.textColor)),
                         ],
                       ),
                     ),

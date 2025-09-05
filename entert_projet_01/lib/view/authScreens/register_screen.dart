@@ -1,8 +1,8 @@
 // view/authScreens/register_screen.dart
 
 import 'package:entert_projet_01/view/authScreens/login_screen.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:entert_projet_01/viewModel/user_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +64,10 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<UserProvider>();
+      final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -77,7 +81,7 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Inscription', style: style(20, 3)),
+                  Text('Inscription', style: style(20, 3, textColor)),
                   SizedBox(height: 12),
 
                   Text(

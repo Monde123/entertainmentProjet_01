@@ -1,8 +1,9 @@
-// pages/screens/details_analytics.dart
-import 'package:entert_projet_01/utils/colors.dart';
+// view/screens/details_analytics.dart
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class DetailsAnalytics extends StatefulWidget {
   const DetailsAnalytics({super.key});
@@ -15,13 +16,17 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
   @override
   Widget build(BuildContext context) {
     double largeurEcran = MediaQuery.of(context).size.width;
+    final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
 
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         actionsPadding: EdgeInsets.all(20),
         backgroundColor: backgroundColor,
-        title: Text('Detail analytics', style: style(18, 2)),
+        title: Text('Detail analytics', style: style(18, 2, textColor)),
         centerTitle: true,
         actions: [
           CircleAvatar(
@@ -42,7 +47,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
               //fin du widget des revenus(container)
               const SizedBox(height: 12),
               ListTile(
-                title: Text('Analytics', style: style(18, 2)),
+                title: Text('Analytics', style: style(18, 2, textColor)),
                 trailing: Icon(Icons.menu_sharp, color: textColor, size: 24),
               ),
               SizedBox(height: 12),
@@ -69,7 +74,7 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
                             size: 24,
                           ),
                         ),
-                        title: Text('Clothes', style: style(14, 2)),
+                        title: Text('Clothes', style: style(14, 2, textColor)),
                         trailing: CircleAvatar(
                           backgroundColor: Colors.amber,
                           child: Icon(
@@ -185,83 +190,98 @@ class _DetailsAnalyticsState extends State<DetailsAnalytics> {
     );
   }
 
-  Container branchAnalytics() {
-    return Container(
-      height: 120,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      padding: const EdgeInsets.only(left: 20, right: 20),
-      margin: EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget branchAnalytics() {
+    return ChangeNotifierProvider(
+      create: (_) => ChangeColor(),
+      child: Consumer<ChangeColor>(
+        builder: (context, color, _) {
+          return Container(
+            height: 120,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            margin: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Net Income',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: textColor,
+                SizedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Net Income',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: color.textColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '\$74000',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: color.textColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        '+25.22% (\$5.00)',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  '\$74000',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: textColor,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  '+25.22% (\$5.00)',
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14,
-                    color: Colors.blue,
+
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: BarChart(
+                    BarChartData(
+                      barGroups: [
+                        BarChartGroupData(
+                          x: 0,
+                          barRods: [
+                            BarChartRodData(toY: 1, color:color.primaryColor),
+                          ],
+                        ),
+                        BarChartGroupData(
+                          x: 1,
+                          barRods: [
+                            BarChartRodData(toY: 2, color: color.primaryColor),
+                          ],
+                        ),
+                        BarChartGroupData(
+                          x: 2,
+                          barRods: [
+                            BarChartRodData(toY: 3, color: color.primaryColor),
+                          ],
+                        ),
+                        BarChartGroupData(
+                          x: 3,
+                          barRods: [
+                            BarChartRodData(toY: 4, color: color.primaryColor),
+                          ],
+                        ),
+                      ],
+                      titlesData: FlTitlesData(show: false),
+                      borderData: FlBorderData(show: false),
+                      gridData: FlGridData(show: false),
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-
-          SizedBox(
-            width: 60,
-            height: 60,
-            child: BarChart(
-              BarChartData(
-                barGroups: [
-                  BarChartGroupData(
-                    x: 0,
-                    barRods: [BarChartRodData(toY: 1, color: primaryColor)],
-                  ),
-                  BarChartGroupData(
-                    x: 1,
-                    barRods: [BarChartRodData(toY: 2, color: primaryColor)],
-                  ),
-                  BarChartGroupData(
-                    x: 2,
-                    barRods: [BarChartRodData(toY: 3, color: primaryColor)],
-                  ),
-                  BarChartGroupData(
-                    x: 3,
-                    barRods: [BarChartRodData(toY: 4, color: primaryColor)],
-                  ),
-                ],
-                titlesData: FlTitlesData(show: false),
-                borderData: FlBorderData(show: false),
-                gridData: FlGridData(show: false),
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

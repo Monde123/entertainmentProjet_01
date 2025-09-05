@@ -1,7 +1,7 @@
 // view/authScreens/update_user_infos.dart
 import 'package:entert_projet_01/view/authScreens/register_screen.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:entert_projet_01/viewModel/user_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -65,6 +65,9 @@ class _UpdateUserInfosScreensState extends State<UpdateUserInfosScreens> {
 
   @override
   Widget build(BuildContext context) {
+      final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final backgroundColor = changeColor.background;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

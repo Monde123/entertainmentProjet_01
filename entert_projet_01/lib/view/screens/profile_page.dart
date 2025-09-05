@@ -1,8 +1,8 @@
 // view/screens/profile_page.dart
 import 'package:entert_projet_01/view/authScreens/login_screen.dart';
 import 'package:entert_projet_01/view/authScreens/update_user_infos.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:entert_projet_01/viewModel/user_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   late List<Map<String, dynamic>> buildInfo;
   @override
   void initState() {
@@ -48,6 +49,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = context.read<UserProvider>();
+      final changeColor = Provider.of<ChangeColor>(context);
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
 
     final user = userProvider.user;
     if (user == null) {
@@ -58,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text('Profile', style: style(24, 3)),
+        title: Text('Profile', style: style(24, 3, textColor)),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -100,9 +104,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: 12),
                   Consumer<UserProvider>(
                     builder: (context, user, child) {
-                      return Text(user.user!.displayName, style: style(20, 3));
+                      return Text(user.user!.displayName, style: style(20, 3, textColor));
                     },
-                    
                   ),
                 ],
               ),
@@ -161,27 +164,34 @@ Widget buildProfileWidget(
   String buildName,
 
   VoidCallback? action,
-) => GestureDetector(
-  onTap: () {
-    action!.call();
-  },
-  child: Container(
-    padding: EdgeInsets.all(7),
-    margin: EdgeInsets.only(left: 16, right: 16, top: 10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: ListTile(
-      leading: CircleAvatar(
-        backgroundColor: textColor,
-        child: Icon(icon, size: 24, color: Colors.white),
-      ),
-      title: Text(buildName, style: style(16, 2)),
-      trailing: CircleAvatar(
-        backgroundColor: backgroundColor,
-        child: Icon(Icons.arrow_right, size: 24, color: textColor),
-      ),
-    ),
+) => ChangeNotifierProvider(
+  create: (_) => ChangeColor(),
+  child: Consumer<ChangeColor>(
+    builder: (context, color, _) {
+      return GestureDetector(
+        onTap: () {
+          action!.call();
+        },
+        child: Container(
+          padding: EdgeInsets.all(7),
+          margin: EdgeInsets.only(left: 16, right: 16, top: 10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: color.textColor,
+              child: Icon(icon, size: 24, color: Colors.white),
+            ),
+            title: Text(buildName, style: style(16, 2, color.textColor)),
+            trailing: CircleAvatar(
+              backgroundColor: color.background,
+              child: Icon(Icons.arrow_right, size: 24, color: color.textColor),
+            ),
+          ),
+        ),
+      );
+    },
   ),
 );

@@ -1,8 +1,9 @@
-// pages/screens/staff_overview.dart
-import 'package:entert_projet_01/utils/colors.dart';
+// view/screens/staff_overview.dart
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class StaffOverview extends StatefulWidget {
   const StaffOverview({super.key, required this.index});
@@ -37,12 +38,16 @@ class _StaffOverviewState extends State<StaffOverview> {
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
+    final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
 
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text('Staff Overview', style: style(18, 2)),
+        title: Text('Staff Overview', style: style(18, 2, textColor)),
         centerTitle: true,
       ),
       body: Column(
@@ -51,7 +56,10 @@ class _StaffOverviewState extends State<StaffOverview> {
 
           SizedBox(height: 10),
           ListTile(
-            title: Text('Employee(${users.length})', style: style(18, 2)),
+            title: Text(
+              'Employee(${users.length})',
+              style: style(18, 2, textColor),
+            ),
             trailing: Icon(
               FontAwesomeIcons.ellipsisVertical,
               color: textColor,
@@ -79,16 +87,16 @@ class _StaffOverviewState extends State<StaffOverview> {
                       ),
                       title: Text(
                         '${users[index]['nom']} ',
-                        style: style(16, 3),
+                        style: style(16, 3, textColor),
                       ),
 
                       subtitle: Text(
                         users[index]['profession'],
-                        style: style(12, 1),
+                        style: style(12, 1, textColor),
                       ),
                       trailing: Text(
                         '${users[index]['etoile'] + index / 10} ',
-                        style: style(16, 3),
+                        style: style(16, 3, textColor),
                       ),
                     ),
                   );
@@ -102,64 +110,73 @@ class _StaffOverviewState extends State<StaffOverview> {
   }
 }
 
-Widget branchCard(int index) => Container(
-  padding: EdgeInsets.only(left: 20),
-  //  margin: EdgeInsets.only(left: 24),
-  height: 150,
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(12),
-  ),
-  child: Row(
-    //mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+Widget branchCard(int index) => ChangeNotifierProvider(
+  create: (_) => ChangeColor(),
+  child: Consumer<ChangeColor>(
+    builder: (context, color, _) {
+      return Container(
+        padding: EdgeInsets.only(left: 20),
+        //  margin: EdgeInsets.only(left: 24),
+        height: 150,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 16,),
-            Text('Branch ($index)', style: style(20, 3)),
-            SizedBox(height: 10),
-            SizedBox(
-              child: Row(
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    radius: 28,
-                    backgroundImage: NetworkImage(faker.image.loremPicsum()),
-                  ),
-                  SizedBox(width: 4),
+                  SizedBox(height: 16),
+                  Text('Branch ($index)', style: style(20, 3,color.textColor)),
+                  SizedBox(height: 10),
                   SizedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        Text('Brandon Agoua', style: style(16, 3)),
-                        SizedBox(height: 4),
-                        Text('Head Office', style: style(12, 1)),
+                        CircleAvatar(
+                          radius: 28,
+                          backgroundImage: NetworkImage(
+                            faker.image.loremPicsum(),
+                          ),
+                        ),
+                        SizedBox(width: 4),
+                        SizedBox(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Brandon Agoua', style: style(16, 3, color.textColor)),
+                              SizedBox(height: 4),
+                              Text('Head Office', style: style(12, 1, color.textColor)),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
+
+            SizedBox(width: 20),
+            Expanded(
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+
+                  image: DecorationImage(
+                    image: NetworkImage(faker.image.loremPicsum()),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-      ),
-
-      SizedBox(width: 20),
-      Expanded(
-        child: Container(
-          height: 150,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-
-            image: DecorationImage(
-              image: NetworkImage(faker.image.loremPicsum()),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    ],
+      );
+    },
   ),
 );

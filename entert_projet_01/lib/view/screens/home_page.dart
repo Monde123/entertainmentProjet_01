@@ -1,8 +1,8 @@
 // view/screens/home_page.dart
 import 'package:entert_projet_01/view/screens/details_analytics.dart';
 import 'package:entert_projet_01/view/screens/inventory.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:entert_projet_01/viewModel/user_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -20,6 +20,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+      final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
 
     final user = userProvider.user;
 

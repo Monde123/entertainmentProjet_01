@@ -1,9 +1,9 @@
 // view/screens/add_products.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/utils/colors.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 
 class AddProducts extends StatefulWidget {
   const AddProducts({super.key});
@@ -36,10 +36,9 @@ class _AddProductsState extends State<AddProducts> {
       );
       try {
         await docRef.set(product.toMap());
-       
-   
+
         setState(() {
-           _form.currentState!.reset();
+          _form.currentState!.reset();
           _productsQualityCtrl = null;
         });
         ScaffoldMessenger.of(context).showSnackBar(
@@ -60,50 +59,56 @@ class _AddProductsState extends State<AddProducts> {
   //end function add products
 
   // formulaire pour le textEditing form du nom, du prix/description
-  Widget formulaire(TextEditingController ctrl, String type) => TextFormField(
-    controller: ctrl,
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'ce champ ne peut pas être vide';
-      }
-      if (type == 'nom' && value.length < 3) {
-        return 'Le nom doit être 3 caractères ';
-      }
-      if (type == 'prix') {
-        final double? tryParse = double.tryParse(value);
-        if (tryParse == null || tryParse.isNegative) {
-          return 'entrez un prix corect';
-        }
-      }
-      return null;
-    },
-    keyboardType:
-        type == 'prix'
-            ? TextInputType.numberWithOptions(decimal: true)
-            : type == 'description'
-            ? TextInputType.multiline
-            : TextInputType.text,
-    decoration: InputDecoration(
-      constraints: BoxConstraints(),
-      filled: true,
-      fillColor: Colors.white,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
+  Widget formulaire(TextEditingController ctrl, String type, Color textColor) =>
+      TextFormField(
+        controller: ctrl,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'ce champ ne peut pas être vide';
+          }
+          if (type == 'nom' && value.length < 3) {
+            return 'Le nom doit être 3 caractères ';
+          }
+          if (type == 'prix') {
+            final double? tryParse = double.tryParse(value);
+            if (tryParse == null || tryParse.isNegative) {
+              return 'entrez un prix corect';
+            }
+          }
+          return null;
+        },
+        keyboardType:
+            type == 'prix'
+                ? TextInputType.numberWithOptions(decimal: true)
+                : type == 'description'
+                ? TextInputType.multiline
+                : TextInputType.text,
+        decoration: InputDecoration(
+          constraints: BoxConstraints(),
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
 
-        gapPadding: 8,
-      ),
-      hintText: "Entrez le $type du produit",
-      label: Text(type, style: style(12, 1)),
-    ),
-  );
+            gapPadding: 8,
+          ),
+          hintText: "Entrez le $type du produit",
+          label: Text(type, style: style(12, 1, textColor)),
+        ),
+      );
   // fin du formulaire
 
   @override
   Widget build(BuildContext context) {
+    final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
+    final secondaryColor = changeColor.secodaryColor;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text('Add products', style: style(20, 4)),
+        title: Text('Add products', style: style(20, 4, textColor)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -137,7 +142,7 @@ class _AddProductsState extends State<AddProducts> {
                       ),
                       Text(
                         'Choisir une photo\n ou ',
-                        style: style(12, 2),
+                        style: style(12, 2, textColor),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 5),
@@ -163,11 +168,11 @@ class _AddProductsState extends State<AddProducts> {
                   ),
                 ),
                 // end of form of editing products's pictures
-                formulaire(_productsNameCtrl, 'nom'), // name form
+                formulaire(_productsNameCtrl, 'nom', textColor), // name form
                 SizedBox(height: 20),
-                formulaire(_productsDescriptionCtrl, 'description'),
+                formulaire(_productsDescriptionCtrl, 'description', textColor),
                 SizedBox(height: 20),
-                formulaire(_productsPriceCtrl, 'prix'), // price form
+                formulaire(_productsPriceCtrl, 'prix', textColor), // price form
                 SizedBox(height: 20),
 
                 DropdownButtonFormField(

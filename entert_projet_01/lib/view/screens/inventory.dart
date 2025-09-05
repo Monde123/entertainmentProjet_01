@@ -1,8 +1,9 @@
 // view/screens/inventory.dart
 import 'package:entert_projet_01/view/screens/transfer_inventory.dart';
-import 'package:entert_projet_01/utils/colors.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key, required this.index});
@@ -24,12 +25,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final changeColor = Provider.of<ChangeColor>(context);
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
         actionsPadding: EdgeInsets.all(20),
-        title: Text('Inventory', style: style(18, 2)),
+        title: Text('Inventory', style: style(18, 2, textColor)),
         centerTitle: true,
         actions: [
           GestureDetector(
@@ -124,7 +128,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                     ),
                                   ),
                                   SizedBox(width: 12),
-                                  Text('Market Louis', style: style(16, 2)),
+                                  Text(
+                                    'Market Louis',
+                                    style: style(16, 2, textColor),
+                                  ),
                                 ],
                               ),
                             ),
@@ -167,46 +174,53 @@ class _InventoryScreenState extends State<InventoryScreen> {
   }
 }
 
-Widget banchInventory(int index) => Container(
-  height: 120,
-  padding: EdgeInsets.only(left: 20, right: 20),
-  margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(16),
-  ),
-  child: Align(
-    alignment: Alignment.center,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-      children: [
-        SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Wall Wolf St', style: style(12, 1)),
-              SizedBox(height: 8),
-              Text('Branch ($index)', style: style(20, 3)),
-            ],
-          ),
+Widget banchInventory(int index) => ChangeNotifierProvider(
+  create: (_) => ChangeColor(),
+  child: Consumer<ChangeColor>(
+    builder: (context, color, _) {
+      return Container(
+        height: 120,
+        padding: EdgeInsets.only(left: 20, right: 20),
+        margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
         ),
-        Container(
-          margin: EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: backgroundColor,
-          ),
+        child: Align(
+          alignment: Alignment.center,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
             children: [
-              Icon(Icons.arrow_drop_down, color: Colors.red),
-              SizedBox(width: 3),
-              Text('Low stock', style: TextStyle(color: Colors.red)),
+              SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Wall Wolf St', style: style(12, 1, color.textColor)),
+                    SizedBox(height: 8),
+                    Text('Branch ($index)', style: style(20, 3, color.textColor)),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color:color.background,
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.arrow_drop_down, color: Colors.red),
+                    SizedBox(width: 3),
+                    Text('Low stock', style: TextStyle(color: Colors.red)),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-      ],
-    ),
+      );
+    },
   ),
 );

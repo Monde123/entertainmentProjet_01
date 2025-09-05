@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
 import 'package:entert_projet_01/view/widgets/cart_products_card.dart';
 import 'package:entert_projet_01/viewModel/other_cart_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,10 @@ class OtherCartScreens extends StatefulWidget {
 class _OtherCartScreensState extends State<OtherCartScreens> {
   @override
   Widget build(BuildContext context) {
-
+  final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
     double priceTotal(List<ProductModel> produits) {
       double s = 0.0;
       for (ProductModel prod in produits) {
@@ -34,7 +37,7 @@ class _OtherCartScreensState extends State<OtherCartScreens> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text('Mon panier', style: style(20, 3)),
+        title: Text('Mon panier', style: style(20, 3, textColor)),
         centerTitle: true,
         actionsPadding: EdgeInsets.all(20),
         actions: [

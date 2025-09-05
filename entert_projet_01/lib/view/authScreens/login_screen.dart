@@ -1,8 +1,8 @@
 // view/authScreens/login_screen.dart
 import 'package:entert_projet_01/main.dart';
 import 'package:entert_projet_01/view/authScreens/register_screen.dart';
+import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:entert_projet_01/viewModel/user_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     TextEditingController controller,
     String type,
     IconData icon,
+    Color primaryColor
   ) => TextFormField(
     controller: controller,
     keyboardType: TextInputType.emailAddress,
@@ -96,6 +97,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<UserProvider>();
+      final changeColor = Provider.of<ChangeColor>(context);
+    final primaryColor = changeColor.primaryColor;
+    final textColor = changeColor.textColor;
+    final backgroundColor = changeColor.background;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(backgroundColor: backgroundColor),
@@ -117,24 +122,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 10),
                         Text(
                           'Connexion',
-                          style: style(24, 3),
+                          style: style(24, 3, textColor),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 12),
                         Text(
                           'Veuillez remplir les informations pour continuer',
-                          style: style(12, 1),
+                          style: style(12, 1, textColor),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 16),
-                  textFormField(_emailController, 'mail', Icons.mail),
+                  textFormField(_emailController, 'mail', Icons.mail, primaryColor),
                   SizedBox(height: 18),
                   textFormField(
                     _passWordController,
                     'passWord',
                     Icons.password,
+                    primaryColor
                   ),
                   SizedBox(height: 26),
                   SizedBox(
@@ -174,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Pas de compte ?", style: style(12, 2)),
+                      Text("Pas de compte ?", style: style(12, 2, textColor)),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
