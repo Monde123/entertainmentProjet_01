@@ -1,7 +1,6 @@
 // repository/product_repository.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:entert_projet_01/model/product_model.dart';
-import 'package:entert_projet_01/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProductRepository {
@@ -26,7 +25,7 @@ class ProductRepository {
         price: price,
         quality: quality,
         description: description,
-        vendorId: _auth.currentUser!.uid,
+        sellerId: _auth.currentUser!.uid,
       );
       await docs.set(_productModel!.toMap());
     } on FirebaseException {

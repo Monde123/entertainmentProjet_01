@@ -55,7 +55,7 @@ class _ProductsPageState extends State<ProductsPageCopy> {
                   stream: _firebase,
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
-                      return Text('Erreur de chargement');
+                      return Text('Erreur de chargement', style: style(16, 2, textColor),);
                     }
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -67,7 +67,7 @@ class _ProductsPageState extends State<ProductsPageCopy> {
                       );
                     }
                     if (snapshot.data!.docs.isEmpty) {
-                      return Text('Aucune donnée disponible');
+                      return Text('Aucune donnée disponible', style: style(16, 2, textColor),);
                     }
        
                     final produits =

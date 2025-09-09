@@ -1,5 +1,4 @@
 // main.dart
-import 'package:entert_projet_01/repository/product_repository.dart';
 import 'package:entert_projet_01/view/authScreens/login_screen.dart';
 import 'package:entert_projet_01/view/screens/cart_screens.dart';
 import 'package:entert_projet_01/view/screens/home_page.dart';
@@ -10,10 +9,10 @@ import 'package:entert_projet_01/view/screens/profile_page.dart';
 import 'package:entert_projet_01/viewModel/cart_provider.dart';
 import 'package:entert_projet_01/viewModel/other_cart_provider.dart';
 import 'package:entert_projet_01/viewModel/product_provider.dart';
+import 'package:entert_projet_01/viewModel/test_api_provider.dart';
 import 'package:entert_projet_01/viewModel/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'viewModel/user_provider.dart';
-import 'package:entert_projet_01/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,6 +30,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (m) => OtherCartProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => ChangeColor()),
+        ChangeNotifierProvider(create: (_) => TestApiProvider()),
       ],
       child: MyApp(),
     ),
@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'first enttertainment',
+      title: 'first entertainment',
 
       home:
           userProvider.isConnected
@@ -69,7 +69,6 @@ class NavigationPage extends StatefulWidget {
 }
 
 class _NavigationPageState extends State<NavigationPage> {
- 
   int _selectedIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
@@ -81,9 +80,9 @@ class _NavigationPageState extends State<NavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-     final changeColor = Provider.of<ChangeColor>(context);
+    final changeColor = Provider.of<ChangeColor>(context);
     return Scaffold(
-      backgroundColor:changeColor.background,
+      backgroundColor: changeColor.background,
       body: _pages[_selectedIndex],
 
       bottomNavigationBar: Container(
@@ -110,7 +109,7 @@ class _NavigationPageState extends State<NavigationPage> {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: changeColor.background,
-              color:changeColor.primaryColor ,
+              color: changeColor.primaryColor,
               tabs: [
                 GButton(icon: FontAwesomeIcons.house, text: 'Home'),
                 GButton(icon: FontAwesomeIcons.productHunt, text: 'Produits'),

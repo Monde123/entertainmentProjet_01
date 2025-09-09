@@ -7,7 +7,7 @@ class ProductModel {
   double price;
   String quality;
   String? description;
-  String vendorId;
+  String sellerId;
   ProductModel({
     required this.id,
     required this.name,
@@ -15,7 +15,7 @@ class ProductModel {
     required this.quality,
     this.description,
     this.produitUrl,
-    required this.vendorId
+    required this.sellerId
   });
   factory ProductModel.fromMap(Map<String, dynamic> v) {
     return ProductModel(
@@ -25,7 +25,7 @@ class ProductModel {
       quality: (v['quality'] ?? 'indisponible'),
       description: (v['description']),
       produitUrl: v['produitUrl'],
-      vendorId: v['vendorId'],
+      sellerId: (v['sellerId'] ?? 'indisponible'),
     );
   }
   Map<String, dynamic> toMap() {
@@ -36,7 +36,7 @@ class ProductModel {
       'quality': quality,
       'description': description,
       'produitUrl': produitUrl,
-      'vendorId': vendorId,
+      'vendorId': sellerId,
     };
   }
 }

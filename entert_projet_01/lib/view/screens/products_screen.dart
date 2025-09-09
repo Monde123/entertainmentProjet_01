@@ -55,7 +55,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     return Center(child: Text(produits.error.toString()));
                   }
                   if (produits.listProduits.isEmpty) {
-                    return Center(child: Text('Aucune données disponibles'));
+                    return Center(child: Text('Aucune données disponibles', style:style(16, 2, textColor),));
                   }
                   return GridView.builder(
                     shrinkWrap: true,

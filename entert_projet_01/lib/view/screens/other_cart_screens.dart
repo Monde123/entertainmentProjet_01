@@ -54,7 +54,7 @@ class _OtherCartScreensState extends State<OtherCartScreens> {
       ),
       body:
           otherCartItems.isCart()
-              ? Center(child: Text('Aucun produit dans le pnier'))
+              ? Center(child: Text('Aucun produit dans le pnier', style: style(16, 2, textColor),))
               : FutureBuilder(
                 future: fetchProducts(otherCartItems),
                 builder: (context, snap) {
@@ -67,7 +67,7 @@ class _OtherCartScreensState extends State<OtherCartScreens> {
                   }
 
                   if (snap.data!.isEmpty) {
-                    return const Center(child: Text("Aucun produit trouvé"));
+                    return Center(child: Text("Aucun produit trouvé", style: style(16,2,textColor),));
                   }
 
                   final produits = snap.data!;
